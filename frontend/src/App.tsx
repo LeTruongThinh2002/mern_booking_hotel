@@ -15,7 +15,6 @@ const App = () => {
           element={
             <Layout>
               <iframe
-                autoP
                 width='560'
                 height='315'
                 src='https://www.youtube.com/embed/W0DWl0L3DdM?si=Cguw7DKlyVAW97ug&autoplay=1'
