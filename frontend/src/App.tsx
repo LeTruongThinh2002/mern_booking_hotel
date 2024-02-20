@@ -59,7 +59,7 @@ const App = () => {
                   <AddHotel />
                 </Layout>
               }
-            ></Route>
+            />
           </>
         )}
         <Route path='*' element={<Navigate to='/' />} />
