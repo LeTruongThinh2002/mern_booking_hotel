@@ -2,8 +2,11 @@ import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom
 import Layout from './layouts/Layout';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
+import AddHotel from './pages/AddHotel';
+import {useAppContext} from './contexts/AppContext';
 
 const App = () => {
+  const {isLoggedIn} = useAppContext();
   return (
     <Router>
       <Routes>
@@ -11,7 +14,15 @@ const App = () => {
           path='/'
           element={
             <Layout>
-              <p>Home Page</p>
+              <iframe
+                width='560'
+                height='315'
+                src='https://www.youtube.com/embed/W0DWl0L3DdM?si=Cguw7DKlyVAW97ug'
+                title='YouTube video player'
+                frameBorder='0'
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                allowFullScreen
+              ></iframe>
             </Layout>
           }
         />
@@ -39,6 +50,18 @@ const App = () => {
             </Layout>
           }
         />
+        {isLoggedIn && (
+          <>
+            <Route
+              path='/add-hotel'
+              element={
+                <Layout>
+                  <AddHotel />
+                </Layout>
+              }
+            ></Route>
+          </>
+        )}
         <Route path='*' element={<Navigate to='/' />} />
       </Routes>
     </Router>
