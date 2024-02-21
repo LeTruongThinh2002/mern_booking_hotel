@@ -26,7 +26,7 @@ router.post(
     body('description').notEmpty().withMessage('Description is required'),
     body('type').notEmpty().withMessage('Hotel type is required'),
     body('pricePerNight').notEmpty().isNumeric().withMessage('Price per night is required and must be a number'),
-    body('facilities').notEmpty().withMessage('Facilities are required')
+    body('facilities').notEmpty().isArray().withMessage('Facilities are required')
   ],
   upload.array('imageFiles', 6),
   async (req: Request, res: Response) => {
@@ -34,16 +34,17 @@ router.post(
       const imageFiles = req.files as Express.Multer.File[];
       const newHotel: HotelType = req.body;
       //1. upload the images to cloudinary
-      const uploadPromises = imageFiles.map(async image => {
-        const b64 = Buffer.from(image.buffer).toString('base64');
-        let dataURI = 'data:' + image.mimetype + ';base64' + b64;
-        const res = await cloudinary.v2.uploader.upload(dataURI);
-        return res.url;
-      });
+      // const uploadPromises = imageFiles.map(async image => {
+      //   const b64 = Buffer.from(image.buffer).toString('base64');
+      //   let dataURI = 'data:' + image.mimetype + ';base64' + b64;
+      //   const res = await cloudinary.v2.uploader.upload(dataURI);
+      //   return res.url;
+      // });
 
-      const imagesUrls = await Promise.all(uploadPromises);
+      const imagesUrls = await uploadImages(imageFiles);
       newHotel.imageUrls = imagesUrls;
       newHotel.userId = req.userId;
+      newHotel.lastUpdated = new Date();
 
       //2. if upload was successful, add the URLs to the new hotel
 
@@ -58,5 +59,16 @@ router.post(
     }
   }
 );
+async function uploadImages(imageFiles: Express.Multer.File[]) {
+  const uploadPromises = imageFiles.map(async image => {
+    const b64 = Buffer.from(image.buffer).toString('base64');
+    let dataURI = 'data:' + image.mimetype + ';base64,' + b64;
+    const res = await cloudinary.v2.uploader.upload(dataURI);
+    return res.url;
+  });
+
+  const imageUrls = await Promise.all(uploadPromises);
+  return imageUrls;
+}
 
 export default router;
