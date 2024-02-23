@@ -92,11 +92,14 @@ export const fetchMyHotelById = async (hotelId: string): Promise<HotelType> => {
 };
 
 export const updateMyHotelById = async (hotelFormData: FormData) => {
-  const response = await fetch(`${API_BASE_URL}/api/my-hotels/${hotelFormData.get('hotelId')}`, {
-    method: 'PUT',
-    credentials: 'include',
-    body: hotelFormData
-  });
+  const response = await fetch(
+    `${API_BASE_URL}/api/my-hotels/${hotelFormData.get('hotelId')}`,
+    {
+      method: 'PUT',
+      credentials: 'include',
+      body: hotelFormData
+    }
+  );
   if (!response.ok) {
     throw new Error('failed to update hotel');
   }
@@ -110,9 +113,16 @@ export type SearchParams = {
   adultCount?: string;
   childCount?: string;
   page?: string;
+  facilities?: string[];
+  types?: string[];
+  stars?: string[];
+  maxPrice?: string;
+  sortOption?: string;
 };
 
-export const searchHotels = async (searchParams: SearchParams): Promise<HotelSearchResponse> => {
+export const searchHotels = async (
+  searchParams: SearchParams
+): Promise<HotelSearchResponse> => {
   const queryParams = new URLSearchParams();
   queryParams.append('destination', searchParams.destination || '');
   queryParams.append('checkIn', searchParams.checkIn || '');
@@ -120,7 +130,19 @@ export const searchHotels = async (searchParams: SearchParams): Promise<HotelSea
   queryParams.append('adultCount', searchParams.adultCount || '');
   queryParams.append('childCount', searchParams.childCount || '');
   queryParams.append('page', searchParams.page || '1');
-  const response = await fetch(`${API_BASE_URL}/api/hotels/search?${queryParams}`);
+  queryParams.append('maxPrice', searchParams.maxPrice || '');
+  queryParams.append('sortOption', searchParams.sortOption || '');
+
+  searchParams.facilities?.forEach(facility =>
+    queryParams.append('facilities', facility)
+  );
+
+  searchParams.types?.forEach(type => queryParams.append('types', type));
+  searchParams.stars?.forEach(star => queryParams.append('stars', star));
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/search?${queryParams}`
+  );
   if (!response.ok) {
     throw new Error('failed to search hotels');
   }

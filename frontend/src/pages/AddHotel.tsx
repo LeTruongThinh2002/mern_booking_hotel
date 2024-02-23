@@ -8,6 +8,9 @@ const AddHotel = () => {
   const {mutate, isLoading} = useMutation(apiClient.addMyHotel, {
     onSuccess: () => {
       showToast({message: 'Hotel added successfully', type: 'SUCCESS'});
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     },
     onError: () => {
       showToast({message: 'Error Saving Hotel', type: 'ERROR'});

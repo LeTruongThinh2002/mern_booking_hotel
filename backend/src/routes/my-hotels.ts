@@ -26,8 +26,14 @@ router.post(
     body('country').notEmpty().withMessage('Country is required'),
     body('description').notEmpty().withMessage('Description is required'),
     body('type').notEmpty().withMessage('Hotel type is required'),
-    body('pricePerNight').notEmpty().isNumeric().withMessage('Price per night is required and must be a number'),
-    body('facilities').notEmpty().isArray().withMessage('Facilities are required')
+    body('pricePerNight')
+      .notEmpty()
+      .isNumeric()
+      .withMessage('Price per night is required and must be a number'),
+    body('facilities')
+      .notEmpty()
+      .isArray()
+      .withMessage('Facilities are required')
   ],
   upload.array('imageFiles', 6),
   async (req: Request, res: Response) => {
@@ -84,34 +90,42 @@ router.get('/:id', verifyToken, async (req: Request, res: Response) => {
   }
 });
 
-router.put('/:hotelId', verifyToken, upload.array('imageFiles'), async (req: Request, res: Response) => {
-  try {
-    const updatedHotel: HotelType = req.body;
-    updatedHotel.lastUpdated = new Date();
-    const hotel = await Hotel.findOneAndUpdate(
-      {
-        _id: req.params.hotelId,
-        userId: req.userId
-      },
-      updatedHotel,
-      {new: true}
-    );
+router.put(
+  '/:hotelId',
+  verifyToken,
+  upload.array('imageFiles'),
+  async (req: Request, res: Response) => {
+    try {
+      const updatedHotel: HotelType = req.body;
+      updatedHotel.lastUpdated = new Date();
+      const hotel = await Hotel.findOneAndUpdate(
+        {
+          _id: req.params.hotelId,
+          userId: req.userId
+        },
+        updatedHotel,
+        {new: true}
+      );
 
-    if (!hotel) {
-      return res.status(404).json({message: 'hotel not found'});
+      if (!hotel) {
+        return res.status(404).json({message: 'hotel not found'});
+      }
+
+      const files = req.files as Express.Multer.File[];
+      const updatedImageUrls = await uploadImages(files);
+
+      hotel.imageUrls = [
+        ...updatedImageUrls,
+        ...(updatedHotel.imageUrls || [])
+      ];
+
+      await hotel.save();
+      res.status(201).json(hotel);
+    } catch (error) {
+      res.status(500).json({message: 'Error updating hotel'});
     }
-
-    const files = req.files as Express.Multer.File[];
-    const updatedImageUrls = await uploadImages(files);
-
-    hotel.imageUrls = [...updatedImageUrls, ...(updatedHotel.imageUrls || [])];
-
-    await hotel.save();
-    res.status(201).json(hotel);
-  } catch (error) {
-    res.status(500).json({message: 'Error updating hotel'});
   }
-});
+);
 
 async function uploadImages(imageFiles: Express.Multer.File[]) {
   const uploadPromises = imageFiles.map(async image => {
