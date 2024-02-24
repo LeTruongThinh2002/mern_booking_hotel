@@ -17,7 +17,13 @@ const SearchBar = () => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    search.saveSearchValues(destination, checkIn, checkOut, adultCount, childCount);
+    search.saveSearchValues(
+      destination,
+      checkIn,
+      checkOut,
+      adultCount,
+      childCount
+    );
     navigate('/search');
   };
 
@@ -73,7 +79,7 @@ const SearchBar = () => {
           startDate={checkIn}
           endDate={checkOut}
           minDate={minDate}
-          maxDate={maxDate}
+          maxDate={checkOut ? checkOut : maxDate}
           placeholderText='Check-in Date'
           className='min-w-full bg-white p-2 focus:outline-none'
           wrapperClassName='min-w-full'
@@ -88,7 +94,7 @@ const SearchBar = () => {
           selectsStart
           startDate={checkIn}
           endDate={checkOut}
-          minDate={checkIn}
+          minDate={checkIn ? checkIn : minDate}
           maxDate={maxDate}
           placeholderText='Check-out Date'
           className='min-w-full bg-white p-2 focus:outline-none'
@@ -96,8 +102,12 @@ const SearchBar = () => {
         />
       </div>
       <div className='flex gap-1'>
-        <button className='w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500'>Search</button>
-        <button className='w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500'>Clear</button>
+        <button className='w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500'>
+          Search
+        </button>
+        <button className='w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500'>
+          Clear
+        </button>
       </div>
     </form>
   );

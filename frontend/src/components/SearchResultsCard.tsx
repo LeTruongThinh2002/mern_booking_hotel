@@ -2,6 +2,8 @@ import {AiFillStar} from 'react-icons/ai';
 import {HotelType} from '../../../backend/src/shared/types';
 import {Link} from 'react-router-dom';
 
+import {IoLocationOutline} from 'react-icons/io5';
+
 type Props = {
   hotel: HotelType;
 };
@@ -31,8 +33,12 @@ const SearchResultsCard = ({hotel}: Props) => {
           >
             {hotel.name}
           </Link>
+          <div className='flex text-sm items-center'>
+            <IoLocationOutline className='mr-1' />
+            {hotel.city}, {hotel.country}
+          </div>
         </div>
-        <div>
+        <div className='mt-5'>
           <div className='line-clamp-4'>{hotel.description}</div>
         </div>
         <div className='grid grid-cols-2 items-end whitespace-nowrap'>

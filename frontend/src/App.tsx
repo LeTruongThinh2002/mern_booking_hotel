@@ -1,4 +1,9 @@
-import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate
+} from 'react-router-dom';
 import Layout from './layouts/Layout';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
@@ -7,6 +12,7 @@ import {useAppContext} from './contexts/AppContext';
 import MyHotels from './pages/MyHotels';
 import EditHotel from './pages/EditHotel';
 import Search from './pages/Search';
+import Detail from './pages/Detail';
 
 const App = () => {
   const {isLoggedIn} = useAppContext();
@@ -34,6 +40,14 @@ const App = () => {
           element={
             <Layout>
               <Search />
+            </Layout>
+          }
+        />
+        <Route
+          path='/detail/:hotelId'
+          element={
+            <Layout>
+              <Detail />
             </Layout>
           }
         />
