@@ -1,7 +1,6 @@
 import {useQuery} from 'react-query';
 import * as apiClient from '../api-client';
 import {BiCheckCircle} from 'react-icons/bi';
-import {IoIosCloseCircle} from 'react-icons/io';
 
 const MyBookings = () => {
   const {data: bookingData} = useQuery(
