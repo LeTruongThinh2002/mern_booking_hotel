@@ -23,8 +23,8 @@ const Detail = () => {
     <div className='space-y-6'>
       <div>
         <span className='flex'>
-          {Array.from({length: hotel.starRating}).map((_star, index) => (
-            <AiFillStar key={index} className='fill-yellow-400' />
+          {Array.from({length: hotel.starRating}).map(() => (
+            <AiFillStar className='fill-yellow-400' />
           ))}
         </span>
         <h1 className='text-3xl font-bold'>{hotel.name}</h1>
