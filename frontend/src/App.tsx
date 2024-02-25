@@ -71,7 +71,7 @@ const App = () => {
         {isLoggedIn && (
           <>
             <Route
-              path='/hotels/:hotelId/booking'
+              path='/hotel/:hotelId/booking'
               element={
                 <Layout>
                   <Booking />
