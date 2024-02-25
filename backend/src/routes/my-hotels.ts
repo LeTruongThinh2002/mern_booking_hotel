@@ -52,6 +52,7 @@ router.post(
       newHotel.imageUrls = imagesUrls;
       newHotel.userId = req.userId;
       newHotel.lastUpdated = new Date();
+      newHotel.bookings = [];
 
       //2. if upload was successful, add the URLs to the new hotel
 
