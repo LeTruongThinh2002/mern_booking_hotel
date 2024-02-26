@@ -15,6 +15,7 @@ import Search from './pages/Search';
 import Detail from './pages/Detail';
 import Booking from './pages/Booking';
 import MyBookings from './pages/MyBookings';
+import Home from './pages/Home';
 
 const App = () => {
   const {isLoggedIn} = useAppContext();
@@ -25,15 +26,7 @@ const App = () => {
           path='/'
           element={
             <Layout>
-              <iframe
-                width='560'
-                height='315'
-                src='https://www.youtube.com/embed/W0DWl0L3DdM?si=Cguw7DKlyVAW97ug&autoplay=1'
-                title='YouTube video player'
-                frameBorder='0'
-                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-                allowFullScreen
-              ></iframe>
+              <Home />
             </Layout>
           }
         />
