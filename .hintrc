@@ -3,14 +3,6 @@
     "development"
   ],
   "hints": {
-    "compat-api/html": [
-      "default",
-      {
-        "ignore": [
-          "iframe[allow]"
-        ]
-      }
-    ],
-    "typescript-config/is-valid": "off"
+    "no-inline-styles": "off"
   }
 }

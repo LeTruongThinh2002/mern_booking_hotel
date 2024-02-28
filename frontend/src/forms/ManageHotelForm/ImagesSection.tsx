@@ -11,7 +11,10 @@ const ImagesSection = () => {
 
   const existingImageUrls = watch('imageUrls');
 
-  const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, imageUrl: string) => {
+  const handleDelete = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    imageUrl: string
+  ) => {
     event.preventDefault();
     setValue(
       'imageUrls',
@@ -27,7 +30,11 @@ const ImagesSection = () => {
           <div className='grid grid-cols-6 gap-4'>
             {existingImageUrls.map((imageUrl, index) => (
               <div key={index} className='relative group hover:origin-center'>
-                <img alt={imageUrl} src={imageUrl} className='min-h-full object-cover' />
+                <img
+                  alt={imageUrl}
+                  src={imageUrl}
+                  className='min-h-full object-cover'
+                />
                 <button
                   onClick={e => handleDelete(e, imageUrl)}
                   className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 text-white'
@@ -41,11 +48,12 @@ const ImagesSection = () => {
         <input
           multiple
           accept='image/*'
-          className='w-full text-gray-700 font-normal'
+          className='w-full text-gray-400 font-normal'
           type='file'
           {...register('imageFiles', {
             validate: imageFiles => {
-              const totalLength = imageFiles.length + (existingImageUrls?.length || 0);
+              const totalLength =
+                imageFiles.length + (existingImageUrls?.length || 0);
 
               if (totalLength === 0) {
                 return 'You must upload at least one image';
@@ -56,7 +64,11 @@ const ImagesSection = () => {
           })}
         />
       </div>
-      {errors.imageFiles && <span className='text-red-500 text-sm font-bold'>{errors.imageFiles.message}</span>}
+      {errors.imageFiles && (
+        <span className='text-red-500 text-sm font-bold'>
+          {errors.imageFiles.message}
+        </span>
+      )}
     </div>
   );
 };

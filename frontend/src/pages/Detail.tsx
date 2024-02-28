@@ -4,6 +4,7 @@ import * as apiClient from '../api-client';
 import {AiFillStar} from 'react-icons/ai';
 import GuestInfoForm from '../forms/GuestInfoForm/GuestInfoForm';
 import {IoLocationOutline} from 'react-icons/io5';
+import CarouselDetail from '../components/CarouselDetail';
 
 const Detail = () => {
   const {hotelId} = useParams();
@@ -33,18 +34,9 @@ const Detail = () => {
           {hotel.city}, {hotel.country}
         </div>
       </div>
-      <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
-        {hotel.imageUrls.map((url, index) => (
-          <div key={index} className='h-[300px]'>
-            <img
-              src={url}
-              alt={hotel.name}
-              className='rounded-md w-full h-full object-cover object-center'
-            />
-          </div>
-        ))}
-      </div>
-      <div className='grid grid-cols-1 lg:grid-cols-4 gap-2'>
+
+      <CarouselDetail images={hotel.imageUrls} />
+      <div className='grid grid-cols-2 lg:grid-cols-4 gap-2 select-none'>
         {hotel.facilities.map((facility, index) => (
           <div key={index} className='border border-slate-300 rounded-sm p-3'>
             {facility}

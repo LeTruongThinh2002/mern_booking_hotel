@@ -6,10 +6,10 @@ type Props = {
 const PriceFilter = ({selectedPrice, onChange}: Props) => {
   return (
     <div>
-      <h4 className='text-md font-semibold mb-2'>Max Price</h4>
+      <h4 className='text-xl font-semibold mb-2'>Max Price</h4>
       <select
         title='Max Price'
-        className='p-2 border border-gray-300 rounded-md w-full focus:border-blue-500 '
+        className=' p-2 border border-gray-300 rounded-md w-full focus:border-blue-500 '
         value={selectedPrice}
         onChange={e =>
           onChange(e.target.value ? parseInt(e.target.value) : undefined)

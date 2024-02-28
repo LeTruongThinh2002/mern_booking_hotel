@@ -66,28 +66,34 @@ const Search = () => {
   };
 
   return (
-    <div className='grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5'>
+    <div
+      data-aos='fade-right'
+      data-aos-duration='1500'
+      className='grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5'
+    >
       <div className='rounded-lg border border-slate-300 p-5 h-fit top-10 lg:sticky'>
         <div className='space-y-5'>
           <h3 className='text-lg font-semibold border-b border-slate-300 pb-5'>
             Filter by:
           </h3>
-          <StarRatingFilter
-            selectedStars={selectedStars}
-            onChange={handleStarsChange}
-          />
-          <HotelTypesFilter
-            selectedHotelTypes={selectedHotelTypes}
-            onChange={handleHotelTypesChange}
-          />
-          <FacilitiesFilter
-            selectedFacilities={selectedFacilities}
-            onChange={handleFacilitiesChange}
-          />
-          <PriceFilter
-            selectedPrice={selectedPrice}
-            onChange={(value?: number) => setSelectedPrice(value)}
-          />
+          <div className='grid lg:grid-cols-1 grid-cols-2 gap-4'>
+            <StarRatingFilter
+              selectedStars={selectedStars}
+              onChange={handleStarsChange}
+            />
+            <HotelTypesFilter
+              selectedHotelTypes={selectedHotelTypes}
+              onChange={handleHotelTypesChange}
+            />
+            <FacilitiesFilter
+              selectedFacilities={selectedFacilities}
+              onChange={handleFacilitiesChange}
+            />
+            <PriceFilter
+              selectedPrice={selectedPrice}
+              onChange={(value?: number) => setSelectedPrice(value)}
+            />
+          </div>
         </div>
       </div>
       <div className='flex flex-col gap-5'>

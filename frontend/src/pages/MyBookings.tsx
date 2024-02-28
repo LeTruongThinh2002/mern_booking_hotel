@@ -18,9 +18,17 @@ const MyBookings = () => {
   }
   return (
     <div className='space-y-5'>
-      <h1 className='text-3xl font-bold'>My Bookings</h1>
+      <h1
+        data-aos='fade-right'
+        data-aos-duration='2500'
+        className='text-3xl font-bold'
+      >
+        My Bookings
+      </h1>
       {bookingData.map((hotel, index) => (
         <div
+          data-aos='fade-right'
+          data-aos-duration='1500'
           key={index}
           className='grid grid-cols-1 lg:grid-cols-[1fr_3fr] border border-slate-300 rounded-lg p-8 gap-5'
         >

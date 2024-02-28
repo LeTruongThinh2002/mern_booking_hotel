@@ -33,6 +33,8 @@ const SearchBar = () => {
 
   return (
     <form
+      data-aos='fade-right'
+      data-aos-duration='1500'
       onSubmit={handleSubmit}
       className='-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4'
     >

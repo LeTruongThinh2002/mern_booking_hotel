@@ -13,15 +13,19 @@ const Booking = () => {
   const search = useSearchContext();
   const {hotelId} = useParams();
 
-  const [numberOfNights, setNumberOfNights] = useState<number>(0);
+  const [numberOfNights, setNumberOfNights] = useState<number>(1);
 
   useEffect(() => {
     if (search.checkIn && search.checkOut) {
-      const nights =
-        Math.abs(search.checkIn.getTime() - search.checkOut.getTime()) /
-        (1000 * 60 * 60 * 24);
+      if (search.checkIn !== search.checkOut) {
+        const nights =
+          Math.abs(search.checkIn.getTime() - search.checkOut.getTime()) /
+          (1000 * 60 * 60 * 24);
 
-      setNumberOfNights(Math.ceil(nights));
+        setNumberOfNights(Math.ceil(nights));
+      } else {
+        setNumberOfNights(1);
+      }
     }
   }, [search.checkIn, search.checkOut]);
 
@@ -53,9 +57,8 @@ const Booking = () => {
     return <></>;
   }
 
-  console.log(currentUser?.email);
   return (
-    <div className='grid md:grid-cols-[1fr_2fr]'>
+    <div className='grid md:grid-cols-[1fr_2fr] gap-4'>
       <BookingDetailsSummary
         checkIn={search.checkIn}
         checkOut={search.checkOut}
@@ -64,7 +67,7 @@ const Booking = () => {
         childCount={search.childCount}
         hotel={hotel}
       />
-      {currentUser && paymentIntentData && (
+      {(currentUser && paymentIntentData && (
         <Elements
           stripe={stripePromise}
           options={{
@@ -76,6 +79,15 @@ const Booking = () => {
             currentUser={currentUser}
           />
         </Elements>
+      )) || (
+        <div>
+          <div className='flex text-2xl justify-center'>
+            Phòng đã đặt tại khách sạn vẫn còn hiệu lực.
+          </div>
+          <div className='flex text-2xl justify-center'>
+            Vui lòng kiểm tra lại!
+          </div>
+        </div>
       )}
     </div>
   );

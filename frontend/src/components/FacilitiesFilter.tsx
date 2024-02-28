@@ -7,13 +7,13 @@ type Props = {
 
 const FacilitiesFilter = ({selectedFacilities, onChange}: Props) => {
   return (
-    <div className='border-b border-slate-300 pb-5'>
-      <h4 className='text-md font-semibold mb-2'>Facilities</h4>
+    <div className='lg:border-b border-slate-300 pb-5'>
+      <h4 className='text-xl font-semibold mb-2'>Facilities</h4>
       {hotelFacilities.map((facility, index) => (
-        <label key={index} className='flex items-center space-x-2'>
+        <label key={index} className='flex items-center gap-2 lg:mb-0 mb-5'>
           <input
             type='checkbox'
-            className='rounded'
+            className='rounded lg:scale-100 scale-150'
             value={facility}
             checked={selectedFacilities.includes(facility)}
             onChange={onChange}

@@ -18,8 +18,19 @@ const TypeSection = () => {
             key={type}
             className={
               typeWatch === type
-                ? 'cursor-pointer bg-blue-300 text-sm rounded-full px-4 py-2 font-semibold'
+                ? 'cursor-pointer text-sm rounded-full px-4 py-2 font-semibold'
                 : 'cursor-pointer bg-gray-300 text-sm rounded-full px-4 py-2 font-semibold'
+            }
+            style={
+              typeWatch === type
+                ? {
+                    backgroundImage:
+                      'url(https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709083583/typeSelected.gif)',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover'
+                  }
+                : {}
             }
           >
             <input
@@ -30,11 +41,15 @@ const TypeSection = () => {
               })}
               className='hidden'
             />
-            <span>{type}</span>
+            <span className='text-slate-900 z-1'>{type}</span>
           </label>
         ))}
       </div>
-      {errors.type && <span className='text-red-500 text-sm font-bold'>{errors.type.message}</span>}
+      {errors.type && (
+        <span className='text-red-500 text-sm font-bold'>
+          {errors.type.message}
+        </span>
+      )}
     </div>
   );
 };

@@ -1,3 +1,37 @@
 @tailwind base;
+
+@layer base {
+  h1 {
+    @apply text-slate-200;
+  }
+  h2 {
+    @apply text-slate-200;
+  }
+  h3 {
+    @apply text-slate-200;
+  }
+  h4 {
+    @apply text-slate-200;
+  }
+  label.items-center {
+    @apply text-slate-900;
+  }
+  input {
+    @apply text-slate-900;
+  }
+  a {
+    @apply text-slate-200;
+  }
+  span {
+    @apply text-slate-200;
+  }
+  span.bg-slate-300 {
+    @apply text-slate-900;
+  }
+  select {
+    @apply text-slate-900;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;
