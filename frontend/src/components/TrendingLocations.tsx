@@ -2,8 +2,6 @@ import unidecode from 'unidecode';
 import {HotelType} from '../../../backend/src/shared/types';
 import {useSearchContext} from '../contexts/SearchContext';
 import {useNavigate} from 'react-router-dom';
-import {useEffect} from 'react';
-
 type Props = {
   hotels: HotelType[];
 };

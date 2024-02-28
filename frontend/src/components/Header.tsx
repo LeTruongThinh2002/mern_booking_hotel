@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import {useAppContext} from '../contexts/AppContext';
 import SignOutButton from './SignOutButton';
+//import DropMenu from './DropMenu';
 
 const Header = () => {
   const {isLoggedIn} = useAppContext();
@@ -46,6 +47,9 @@ const Header = () => {
             </Link>
           )}
         </span>
+        {/* <span className='flex space-x-2 visible lg:invisible'>
+          <DropMenu />
+        </span> */}
       </div>
     </div>
   );
