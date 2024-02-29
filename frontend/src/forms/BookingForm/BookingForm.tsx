@@ -134,7 +134,7 @@ const BookingForm = ({currentUser, paymentIntent}: Props) => {
         </h3>
         <CardElement
           id='payment-element'
-          className='border rounded-md p-2 text-xl'
+          className='border bg-slate-200 rounded-md p-2 text-xl'
         />
       </div>
       <div className='grid grid-cols-1'>
