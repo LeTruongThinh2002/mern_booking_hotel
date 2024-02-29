@@ -65,6 +65,34 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/performance', async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find();
+    let hotelCount = hotels.length;
+    const trendingLocations: {city: string; count: number}[] =
+      hotels
+        ?.reduce((acc: {city: string; count: number}[], hotel) => {
+          const city = hotel.city.split(',').reverse()[0].trim();
+          const count = hotel.bookings.length;
+
+          const existingCity = acc.find(location => location.city === city);
+          if (existingCity) {
+            existingCity.count += count;
+          } else {
+            acc.push({city, count});
+          }
+          return acc;
+        }, [])
+        .sort((a, b) => a.count - b.count)
+        .reverse() || [];
+    const data = [trendingLocations, hotelCount];
+    res.json(data);
+  } catch (error) {
+    console.log('error', error);
+    res.status(500).json({message: 'Error fetching hotels'});
+  }
+});
+
 router.get(
   '/:id',
   [param('id').notEmpty().withMessage('Hotel ID is required')],

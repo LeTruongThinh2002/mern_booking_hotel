@@ -13,7 +13,7 @@ const Header = () => {
           data-aos-duration='1500'
           className='text-3xl font-bold tracking-tight'
         >
-          <Link to='/'>MerHolidays.com</Link>
+          <Link to='/'>Booking.com</Link>
         </span>
         <span className='flex space-x-2'>
           {isLoggedIn ? (

@@ -2,10 +2,14 @@ import {useQuery} from 'react-query';
 import * as apiClient from '../api-client';
 import LatestDestinationCard from '../components/LatestDestinationCard';
 import TrendingLocations from '../components/TrendingLocations';
+import Performance from '../components/Performance';
 
 const Home = () => {
   const {data: hotels} = useQuery('fetchQuery', apiClient.fetchHotels);
-
+  const {data: performance} = useQuery(
+    'fetchPerformance',
+    apiClient.fetchPerformance
+  );
   const topRowHotels = hotels?.slice(0, 2) || [];
   const bottomRowHotels = hotels?.slice(2, 3) || [];
   let sortedHotels;
@@ -61,6 +65,7 @@ const Home = () => {
           <TrendingLocations hotels={hotels || []} />
         </div>
       </div>
+
       <div className='space-y-3'>
         <h2
           data-aos='fade-right'
@@ -84,6 +89,17 @@ const Home = () => {
             ))}
           </div>
         </div>
+      </div>
+
+      <div className='space-y-3'>
+        <h2
+          data-aos='fade-up'
+          data-aos-duration='1500'
+          className='text-3xl mt-5 text-center font-bold'
+        >
+          Website performance
+        </h2>
+        <Performance performance={performance} />
       </div>
     </div>
   );

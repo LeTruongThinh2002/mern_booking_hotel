@@ -35,7 +35,7 @@ const Layout = ({children}: Props) => {
         <img
           title='background'
           src='https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709102253/pngegg_vlurf0.png'
-          className='md:h-[800px] h-[300px] absolute z-0 right-0 bottom-0 pointer-events-none opacity-10'
+          className='lg:visible invisible md:h-[800px] h-[300px] absolute z-0 right-0 bottom-0 pointer-events-none opacity-10'
           style={{transform: 'scaleX(-1)'}}
         />
       ) : (

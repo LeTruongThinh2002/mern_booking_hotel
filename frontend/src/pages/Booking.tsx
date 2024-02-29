@@ -13,7 +13,7 @@ const Booking = () => {
   const search = useSearchContext();
   const {hotelId} = useParams();
 
-  const [numberOfNights, setNumberOfNights] = useState<number>(1);
+  const [numberOfNights, setNumberOfNights] = useState<number>(0);
 
   useEffect(() => {
     if (search.checkIn && search.checkOut) {
