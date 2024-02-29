@@ -11,7 +11,12 @@ export default {
         }
       }
     },
-    container: {}
+    container: {
+      padding: [
+        'sm'='auto',
+        'md'= '10rem'
+      ]
+    }
   },
   plugins: []
 };
