@@ -32,13 +32,7 @@ const TrendingLocations = ({hotels}: Props) => {
   const topTrending = trendingLocations.splice(0, 2);
   const bottomTrending = trendingLocations.splice(0, 3);
   const handleSubmit = (city: string) => {
-    search.saveSearchValues(
-      city,
-      search.checkIn,
-      search.checkOut,
-      search.adultCount,
-      search.childCount
-    );
+    search.saveSearchValues(city, search.checkIn, search.checkOut, 1, 0);
     navigate('/search');
   };
   return (
