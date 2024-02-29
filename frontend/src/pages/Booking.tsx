@@ -62,7 +62,7 @@ const Booking = () => {
       <BookingDetailsSummary
         checkIn={search.checkIn}
         checkOut={search.checkOut}
-        numberOfNights={numberOfNights}
+        numberOfNights={numberOfNights || 1}
         adultCount={search.adultCount}
         childCount={search.childCount}
         hotel={hotel}
