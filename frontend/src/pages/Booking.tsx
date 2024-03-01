@@ -17,15 +17,14 @@ const Booking = () => {
 
   useEffect(() => {
     if (search.checkIn && search.checkOut) {
-      if (search.checkIn !== search.checkOut) {
-        const nights =
-          Math.abs(search.checkIn.getTime() - search.checkOut.getTime()) /
-          (1000 * 60 * 60 * 24);
-
-        setNumberOfNights(Math.ceil(nights));
-      } else {
-        setNumberOfNights(1);
+      if (search.checkIn === search.checkOut) {
+        search.checkOut = new Date(search.checkIn.getTime() + 86400000);
       }
+      const nights =
+        Math.abs(search.checkIn.getTime() - search.checkOut.getTime()) /
+        (1000 * 60 * 60 * 24);
+
+      setNumberOfNights(Math.ceil(nights));
     }
   }, [search.checkIn, search.checkOut]);
 

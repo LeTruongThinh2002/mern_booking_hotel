@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import {useSearchContext} from '../../contexts/SearchContext';
 import {useAppContext} from '../../contexts/AppContext';
 import {useLocation, useNavigate} from 'react-router-dom';
+import {TbCalendarHeart} from 'react-icons/tb';
 
 type Props = {hotelId: string; pricePerNight: number};
 
@@ -73,16 +74,17 @@ const GuestInfoForm = ({hotelId, pricePerNight}: Props) => {
         <div className='grid grid-cols-1 gap-4 items-center'>
           <div>
             <DatePicker
-              required
               selected={checkIn}
               onChange={date => {
                 setValue('checkIn', date as Date);
               }}
               selectsStart
+              icon={<TbCalendarHeart className='text-slate-400 text-xl' />}
+              showIcon
               startDate={checkIn}
               endDate={checkOut}
               minDate={minDate}
-              maxDate={checkOut ? checkOut : maxDate}
+              maxDate={new Date(checkOut.getTime() - 86400000)}
               placeholderText='Check-in Date'
               className='min-w-full bg-white p-2 focus:outline-none'
               wrapperClassName='min-w-full'
@@ -90,15 +92,16 @@ const GuestInfoForm = ({hotelId, pricePerNight}: Props) => {
           </div>
           <div>
             <DatePicker
-              required
               selected={checkOut}
               onChange={date => {
                 setValue('checkOut', date as Date);
               }}
               selectsStart
-              startDate={checkIn}
+              icon={<TbCalendarHeart className='text-slate-400 text-xl' />}
+              showIcon
+              startDate={new Date(checkIn.getTime() + 86400000)}
               endDate={checkOut}
-              minDate={checkIn ? checkIn : minDate}
+              minDate={new Date(checkIn.getTime() + 86400000)}
               maxDate={maxDate}
               placeholderText='Check-in Date'
               className='min-w-full bg-white p-2 focus:outline-none'
