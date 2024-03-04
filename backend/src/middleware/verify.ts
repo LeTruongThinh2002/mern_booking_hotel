@@ -4,13 +4,13 @@ import jwt, {JwtPayload} from 'jsonwebtoken';
 declare global {
   namespace Express {
     interface Request {
-      userId: string;
+      email: string;
     }
   }
 }
 
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies['auth_token'];
+const verifyTokenEmail = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.query.token as string;
   if (!token) {
     return res.status(401).json({
       message: 'Unauthorized token'
@@ -18,7 +18,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
-    req.userId = (decoded as JwtPayload).userId;
+    req.email = (decoded as JwtPayload).email;
     next();
   } catch (err) {
     return res.status(401).json({
@@ -27,4 +27,4 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default verifyToken;
+export default verifyTokenEmail;

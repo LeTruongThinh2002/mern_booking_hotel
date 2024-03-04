@@ -4,6 +4,7 @@ export type UserType = {
   password: string;
   firstName: string;
   lastName: string;
+  verify: boolean;
 };
 
 export type HotelType = {
