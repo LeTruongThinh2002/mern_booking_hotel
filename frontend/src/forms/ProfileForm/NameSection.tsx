@@ -23,10 +23,7 @@ const NameSection = ({firstName, lastName}: ChangeNameType) => {
     setIsEditing(prevIsEditing => !prevIsEditing); // Toggle state with concise logic
     const target = event.target; // Get mouse target
     setValueFirstName(firstName);
-    if (
-      target.classList.contains('fa-check') ||
-      target.classList.contains('fa-times')
-    ) {
+    if (target.classList.contains('fa-check' || 'fa-times')) {
       setIsEditing(false);
     }
   };
@@ -34,11 +31,7 @@ const NameSection = ({firstName, lastName}: ChangeNameType) => {
     setIsEditingLastName(prevIsEditing => !prevIsEditing); // Toggle state with concise logic
     const target = event.target; // Get mouse target
     setValueLastName(lastName);
-
-    if (
-      target.classList.contains('fa-check') ||
-      target.classList.contains('fa-times')
-    ) {
+    if (target.classList.contains('fa-check' || 'fa-times')) {
       setIsEditingLastName(false);
     }
   };
@@ -110,7 +103,7 @@ const NameSection = ({firstName, lastName}: ChangeNameType) => {
             />
           ) : (
             <div onClick={handleClickLastName}>
-              <DetailRow detail={lastName} />
+              <DetailRow detail={valueLastName} />
             </div>
           )}
           {isEditingLastName && ( // Render icons only when editing

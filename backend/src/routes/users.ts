@@ -65,7 +65,11 @@ router.post(
       user.lastName = lastName;
       user.save();
 
-      res.status(200).send({message: 'Change Info Successfully!'});
+      const updatedUser = {
+        firstName: user.firstName,
+        lastName: user.lastName
+      };
+      res.status(200).send({message: 'Change Info Successfully!', updatedUser});
     } catch (error) {
       console.log(error);
       res.status(500).json({message: 'Something went wrong'});
