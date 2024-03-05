@@ -34,6 +34,14 @@ const Header = () => {
               >
                 My Hotels
               </Link>
+              <Link
+                data-aos='fade-down'
+                data-aos-duration='1500'
+                className='flex items-center px-3 font-bold hover:bg-blue-600'
+                to='/profile'
+              >
+                Profile
+              </Link>
               <SignOutButton />
             </>
           ) : (

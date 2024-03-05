@@ -16,6 +16,7 @@ import Detail from './pages/Detail';
 import Booking from './pages/Booking';
 import MyBookings from './pages/MyBookings';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 const App = () => {
   const {isLoggedIn} = useAppContext();
@@ -64,6 +65,14 @@ const App = () => {
         />
         {isLoggedIn && (
           <>
+            <Route
+              path='/profile'
+              element={
+                <Layout>
+                  <Profile />
+                </Layout>
+              }
+            />
             <Route
               path='/hotel/:hotelId/booking'
               element={

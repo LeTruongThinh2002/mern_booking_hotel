@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: 'thinhofdakh@gmail.com',
-    pass: 'kxqgrrsdiakspbeb'
+    user: process.env.USER_API_SMTP,
+    pass: process.env.PWD_API_SMTP
   }
 });
 
@@ -33,14 +33,11 @@ router.get('/me', verifyToken, async (req: Request, res: Response) => {
   }
 });
 
-//change first, last name, email with true password
+//change first, last name
 router.post(
-  '/changeInfo',
+  '/changeName',
   verifyToken,
   [
-    check('password', 'Password with 8 or more characters required!')
-      .trim()
-      .isLength({min: 8}),
     check('firstName', 'First name is required!')
       .trim()
       .isString()
@@ -48,7 +45,43 @@ router.post(
     check('lastName', 'Last name is required!')
       .trim()
       .isString()
-      .isLength({min: 1}),
+      .isLength({min: 1})
+  ],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({message: errors.array()});
+    }
+    const {firstName, lastName} = req.body;
+
+    try {
+      let user = await User.findOne({_id: req.userId});
+      if (!user) {
+        return res.status(400).json({
+          message: 'User not found!'
+        });
+      }
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.save();
+
+      res.status(200).send({message: 'Change Info Successfully!'});
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({message: 'Something went wrong'});
+    }
+  }
+);
+
+//change email with password
+
+router.post(
+  '/changeEmail',
+  verifyToken,
+  [
+    check('password', 'Password with 8 or more characters required!')
+      .trim()
+      .isLength({min: 8}),
     check('email', 'Email is required!').isEmail()
   ],
   async (req: Request, res: Response) => {
@@ -56,7 +89,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({message: errors.array()});
     }
-    const {email, password, firstName, lastName} = req.body;
+    const {email, password} = req.body;
 
     try {
       let user = await User.findOne({_id: req.userId});
@@ -71,8 +104,6 @@ router.post(
           message: 'Invalid password!'
         });
       }
-      user.firstName = firstName;
-      user.lastName = lastName;
       if (user.email !== email) {
         user.email = email;
         user.verify = false;

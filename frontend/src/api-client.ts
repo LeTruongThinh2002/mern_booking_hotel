@@ -7,6 +7,7 @@ import {
   UserType
 } from '../../backend/src/shared/types';
 import {BookingFormData} from './forms/BookingForm/BookingForm';
+import {ChangeNameType} from './forms/ProfileForm/NameSection';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
@@ -35,6 +36,24 @@ export const register = async (formData: RegisterFormData) => {
   if (!response.ok) {
     throw new Error(responseBody.message);
   }
+};
+
+export const changeName = async ({firstName, lastName}: ChangeNameType) => {
+  const response = await fetch(`${API_BASE_URL}/api/users/changeName`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      firstName,
+      lastName
+    })
+  });
+  if (!response.ok) {
+    throw new Error('failed to change name');
+  }
+  return response.json();
 };
 
 export const signIn = async (formData: SignInFormData) => {
