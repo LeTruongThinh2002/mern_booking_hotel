@@ -1,30 +1,43 @@
-import {useEffect} from 'react';
+import {Bounce, ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type ToastProps = {
   message: string;
   type: 'SUCCESS' | 'ERROR';
-  onClose: () => void;
 };
 
-const Toast = ({message, type, onClose}: ToastProps) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-    }, 5000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [onClose]);
-  const styles =
-    type === 'SUCCESS'
-      ? 'fixed top-4 right-4 z-50 p-4 rounded-md bg-green-600 text-white max-w-md'
-      : 'fixed top-4 right-4 z-50 p-4 rounded-md bg-red-600 text-white max-w-md';
+const Toast = ({message, type}: ToastProps) => {
+  const notify = () => {
+    if (type === 'SUCCESS') {
+      toast(message, {
+        icon: <>🚀</>,
+        toastId: 1
+      });
+    } else {
+      toast.error(message, {
+        toastId: 1
+      });
+    }
+  };
   return (
-    <div className={styles}>
-      <div className='flex justify-center items-center'>
-        <span className='text-lg font-semibold'>{message}</span>
-      </div>
-    </div>
+    <>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='dark'
+        limit={3}
+        transition={Bounce}
+      />
+      {type === 'SUCCESS' && notify()}
+      {type === 'ERROR' && notify()}
+    </>
   );
 };
 

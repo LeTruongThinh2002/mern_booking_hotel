@@ -15,7 +15,7 @@ const ProfileForm = ({user}: Props) => {
       </h1>
       <div className='grid grid-cols-1 gap-5 lg:w-[800px] sm:w-[500px]'>
         <NameSection firstName={user.firstName} lastName={user.lastName} />
-        <EmailSection email={user.email} />
+        <EmailSection email={user.email} password={''} verify={user.verify} />
         <PasswordSection />
       </div>
       <h1 className='text-2xl font-bold border-b border-slate-600 pt-2 pb-3'>

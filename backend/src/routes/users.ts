@@ -116,7 +116,7 @@ router.post(
         );
         // send mail with defined transport object
         const info = await transporter.sendMail({
-          from: '"Holly Security Booking 👨‍✈️" <thinhofdakh@gmail.com>', // sender address
+          from: `"Holly Security Booking 👨‍✈️" <${process.env.USER_API_SMTP}>`, // sender address
           to: email, // list of receivers
           subject: 'Verify your new email ✅', // Subject line
           html: `<a href="http://localhost:8888/api/users/verify?token=${token}" target="_blank">Click here to verify your email!</a>` // html body

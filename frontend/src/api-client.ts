@@ -8,6 +8,7 @@ import {
 } from '../../backend/src/shared/types';
 import {BookingFormData} from './forms/BookingForm/BookingForm';
 import {ChangeNameType} from './forms/ProfileForm/NameSection';
+import {ChangeEmailType} from './forms/ProfileForm/EmailSection';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
@@ -50,10 +51,46 @@ export const changeName = async ({firstName, lastName}: ChangeNameType) => {
       lastName
     })
   });
+
+  const responseBody = await response.json();
+
   if (!response.ok) {
-    throw new Error('failed to change name');
+    throw new Error(responseBody.message[0].msg);
   }
-  return response.json();
+};
+export const changeEmail = async ({password, email}: ChangeEmailType) => {
+  const response = await fetch(`${API_BASE_URL}/api/users/changeEmail`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      password,
+      email
+    })
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) {
+    throw new Error(responseBody.message[0].msg);
+  }
+};
+export const vefiryEmail = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/users/verifyEmail`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) {
+    throw new Error(responseBody.message[0].msg);
+  }
 };
 
 export const signIn = async (formData: SignInFormData) => {

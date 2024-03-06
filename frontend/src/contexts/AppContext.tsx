@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Toast from '../components/Toast';
 import {useQuery} from 'react-query';
 import * as apiClient from '../api-client';
@@ -27,6 +27,14 @@ export const AppContextProvider = ({children}: {children: React.ReactNode}) => {
   const {isError} = useQuery('validateToken', apiClient.validateToken, {
     retry: false
   });
+  useEffect(() => {
+    if (toast) {
+      // Delete message toast after showToast
+      setTimeout(() => {
+        setToast(undefined);
+      }, 5100);
+    }
+  }, [toast]);
 
   return (
     <AppContext.Provider
@@ -38,13 +46,7 @@ export const AppContextProvider = ({children}: {children: React.ReactNode}) => {
         stripePromise
       }}
     >
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(undefined)}
-        />
-      )}
+      {toast && <Toast message={toast.message} type={toast.type} />}
       {children}
     </AppContext.Provider>
   );
