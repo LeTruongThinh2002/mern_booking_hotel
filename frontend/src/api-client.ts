@@ -9,6 +9,7 @@ import {
 import {BookingFormData} from './forms/BookingForm/BookingForm';
 import {ChangeNameType} from './forms/ProfileForm/NameSection';
 import {ChangeEmailType} from './forms/ProfileForm/EmailSection';
+import {ChangePasswordType} from './forms/ProfileForm/PasswordSection';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
@@ -55,7 +56,7 @@ export const changeName = async ({firstName, lastName}: ChangeNameType) => {
   const responseBody = await response.json();
 
   if (!response.ok) {
-    throw new Error(responseBody.message[0].msg);
+    throw new Error(responseBody.message[0].msg || responseBody.message);
   }
 };
 export const changeEmail = async ({password, email}: ChangeEmailType) => {
@@ -74,7 +75,30 @@ export const changeEmail = async ({password, email}: ChangeEmailType) => {
   const responseBody = await response.json();
 
   if (!response.ok) {
-    throw new Error(responseBody.message[0].msg);
+    throw new Error(responseBody.message[0].msg || responseBody.message);
+  }
+};
+export const changePassword = async ({
+  password,
+  newPassword,
+  reNewPassword
+}: ChangePasswordType) => {
+  const response = await fetch(`${API_BASE_URL}/api/users/changePassword`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      password,
+      newPassword,
+      reNewPassword
+    })
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) {
+    throw new Error(responseBody.message[0].msg || responseBody.message);
   }
 };
 export const vefiryEmail = async () => {

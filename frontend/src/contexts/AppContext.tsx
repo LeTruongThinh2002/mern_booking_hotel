@@ -27,21 +27,23 @@ export const AppContextProvider = ({children}: {children: React.ReactNode}) => {
   const {isError} = useQuery('validateToken', apiClient.validateToken, {
     retry: false
   });
-  useEffect(() => {
-    if (toast) {
-      // Delete message toast after showToast
-      setTimeout(() => {
-        setToast(undefined);
-      }, 5100);
-    }
-  }, [toast]);
+
+  const handleShowToast = (
+    toastMessage: React.SetStateAction<ToastMessage | undefined>
+  ) => {
+    setToast(toastMessage);
+    const timeoutId = setTimeout(() => {
+      setToast(undefined);
+    }, 5100);
+
+    // Xóa timeout nếu component unmount
+    return () => clearTimeout(timeoutId);
+  };
 
   return (
     <AppContext.Provider
       value={{
-        showToast: toastMessage => {
-          setToast(toastMessage);
-        },
+        showToast: handleShowToast,
         isLoggedIn: !isError,
         stripePromise
       }}

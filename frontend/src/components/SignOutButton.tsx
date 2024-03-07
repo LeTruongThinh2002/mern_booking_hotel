@@ -1,6 +1,7 @@
 import {useMutation, useQueryClient} from 'react-query';
 import * as apiClient from '../api-client';
 import {useAppContext} from '../contexts/AppContext';
+import {VscSignOut} from 'react-icons/vsc';
 
 const SignOutButton = () => {
   const queryClient = useQueryClient();
@@ -20,12 +21,13 @@ const SignOutButton = () => {
   };
   return (
     <button
+      title='Sign out'
       data-aos='fade-down'
       data-aos-duration='1500'
       onClick={handleClick}
-      className='text-blue-600 px-3 font-bold bg-white hover:bg-gray-100'
+      className='flex items-center text-3xl'
     >
-      Sign Out
+      <VscSignOut className='hover:scale-150 hover:text-yellow-300' />
     </button>
   );
 };

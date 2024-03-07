@@ -31,14 +31,7 @@ const Performance = ({performance}: any) => {
     <div
       data-aos='fade-up'
       data-aos-duration='1500'
-      className='grid lg:grid-cols-4 grid-cols-1 gap-4 content-evenly p-4 rounded-lg bg-gray-200'
-      style={{
-        backgroundImage:
-          'url(https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709083583/typeSelected.gif)',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover'
-      }}
+      className="grid bg-[url('https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709083583/typeSelected.gif')] bg-no-repeat bg-center bg-cover lg:grid-cols-4 grid-cols-1 gap-4 content-evenly p-4 rounded-lg"
     >
       <div className='contain-performance'>
         <h3 className='grid grid-cols-1 gap-2 place-items-center'>
