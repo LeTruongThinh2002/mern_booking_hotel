@@ -28,22 +28,24 @@ export const AppContextProvider = ({children}: {children: React.ReactNode}) => {
     retry: false
   });
 
-  const handleShowToast = (
-    toastMessage: React.SetStateAction<ToastMessage | undefined>
-  ) => {
-    setToast(toastMessage);
+  const [talk, setTalk] = useState(0);
+
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
       setToast(undefined);
+      setTalk(0);
     }, 5100);
-
-    // Xóa timeout nếu component unmount
     return () => clearTimeout(timeoutId);
-  };
-
+  }, [toast && talk === 2]);
+  useEffect(() => {
+    setTalk(talk + 1);
+  }, [toast]);
   return (
     <AppContext.Provider
       value={{
-        showToast: handleShowToast,
+        showToast: toastMessage => {
+          setToast(toastMessage);
+        },
         isLoggedIn: !isError,
         stripePromise
       }}

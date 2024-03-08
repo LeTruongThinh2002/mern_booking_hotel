@@ -71,7 +71,7 @@ const NameSection = ({firstName, lastName}: ChangeNameType) => {
       <div className='grid grid-cols-1'>
         <h3 className='text-lg font-semibold text-slate-200'>First Name</h3>
         {isEditing ? (
-          <div className='grid grid-cols-[9fr_1fr] w-full'>
+          <div className='grid grid-cols-[8fr_2fr] w-full'>
             <DetailRowInput
               name='firstName'
               type='text'
@@ -99,7 +99,7 @@ const NameSection = ({firstName, lastName}: ChangeNameType) => {
       <div className='grid grid-cols-1'>
         <h3 className='text-lg font-semibold text-slate-200'>Last Name</h3>
         {isEditingLastName ? (
-          <div className='grid grid-cols-[9fr_1fr] w-full'>
+          <div className='grid grid-cols-[8fr_2fr] w-full'>
             <DetailRowInput
               name='lastName'
               placeholder='Last name...'

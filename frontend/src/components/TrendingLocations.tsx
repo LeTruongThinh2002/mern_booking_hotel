@@ -75,7 +75,7 @@ const TrendingLocations = ({hotels}: Props) => {
           </div>
         ))}
       </div>
-      <div className='grid grid-cols-3 gap-4'>
+      <div className='grid lg:grid-cols-3 grid-cols-2 gap-4'>
         {bottomTrending.map((lct, index) => (
           <div
             onClick={() => handleSubmit(lct.city)}

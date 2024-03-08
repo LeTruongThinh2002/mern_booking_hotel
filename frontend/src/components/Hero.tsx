@@ -19,11 +19,6 @@ const Hero = () => {
           </p>
         </div>
       </div>
-      <img
-        title='background'
-        src='https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709044083/docs_tinypng.d9e4dcdc_cjsb0g.png'
-        className='absolute z-0 top-0 pointer-events-none opacity-25'
-      />
     </>
   );
 };

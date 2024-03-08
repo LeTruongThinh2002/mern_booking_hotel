@@ -22,8 +22,6 @@ const SignOutButton = () => {
   return (
     <button
       title='Sign out'
-      data-aos='fade-down'
-      data-aos-duration='1500'
       onClick={handleClick}
       className='flex items-center text-3xl'
     >

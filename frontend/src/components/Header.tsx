@@ -24,13 +24,14 @@ const Header = () => {
 
   const {isLoggedIn} = useAppContext();
   return (
-    <div className='bg-transparent py-6'>
+    <div className='bg-slate-900 py-6'>
+      <img
+        title='background'
+        src='https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709044083/docs_tinypng.d9e4dcdc_cjsb0g.png'
+        className='absolute z-0 top-0 pointer-events-none opacity-25'
+      />
       <div className='container mx-auto flex justify-between'>
-        <span
-          data-aos='fade-down'
-          data-aos-duration='1500'
-          className='text-3xl font-bold tracking-tight'
-        >
+        <span className='text-3xl font-bold tracking-tight'>
           <Link to='/'>Booking.com</Link>
         </span>
         {isLoggedIn ? (
@@ -39,17 +40,13 @@ const Header = () => {
               <span className='grid grid-cols-4 lg:gap-20 gap-14'>
                 <Link
                   title='Your booking'
-                  data-aos='fade-down'
-                  data-aos-duration='1500'
-                  className='flex items-center text-3xl'
+                  className='flex items-center text-3xl '
                   to='/my-bookings'
                 >
                   <TbMapPinCheck className='hover:scale-150 hover:text-yellow-300' />
                 </Link>
                 <Link
                   title='Your hotels'
-                  data-aos='fade-down'
-                  data-aos-duration='1500'
                   className='flex items-center text-3xl'
                   to='/my-hotels'
                 >
@@ -57,8 +54,6 @@ const Header = () => {
                 </Link>
                 <Link
                   title='Profile'
-                  data-aos='fade-down'
-                  data-aos-duration='1500'
                   className='flex items-center text-3xl'
                   to='/profile'
                 >
@@ -74,8 +69,6 @@ const Header = () => {
           </>
         ) : (
           <Link
-            data-aos='fade-down'
-            data-aos-duration='1500'
             to='/sign-in'
             className='flex bg-white items-center text-blue-600 px-3 font-bold hover:bg-gray-100'
           >
