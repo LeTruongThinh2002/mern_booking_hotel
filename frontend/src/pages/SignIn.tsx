@@ -44,20 +44,10 @@ const SignIn = () => {
         className='flex flex-col gap-5 lg:w-[800px] sm:w-[500px]'
         onSubmit={onSubmit}
       >
-        <h2
-          className='text-3xl text-transparent text-center font-bold pointer-events-none'
-          style={{
-            backgroundImage:
-              'url(https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709083583/typeSelected.gif)',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundClip: 'text'
-          }}
-        >
+        <h2 className="text-3xl select-none text-transparent text-center font-bold pointer-events-none bg-[url('https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709083583/typeSelected.gif')] bg-center bg-cover bg-no-repeat bg-clip-text">
           SIGN IN
         </h2>
-        <label className='text-lg font-bold grid gap-2'>
+        <label className='text-lg select-none font-bold grid gap-2'>
           Email
           <input
             placeholder='Email Address'
@@ -69,7 +59,7 @@ const SignIn = () => {
         {errors.email && (
           <span className='text-red-500'>{errors.email.message}</span>
         )}
-        <label className='text-lg font-bold grid gap-2'>
+        <label className='text-lg select-none font-bold grid gap-2'>
           Password
           <input
             placeholder='Password'
@@ -90,10 +80,20 @@ const SignIn = () => {
 
         <span className='grid lg:grid-cols-2 grid-cols-1 gap-4'>
           <span className='lg:col-start-1 lg:col-end-2 lg:text-lg text-xl'>
-            Not Registered?{' '}
-            <Link className='underline' to='/register'>
-              Create an account here
-            </Link>
+            <div>
+              Not Registered?{' '}
+              <Link className='underline' to='/register'>
+                Create an account here
+              </Link>
+            </div>
+            <div>
+              <Link
+                className='underline text-sky-400 font-semibold'
+                to='/forgot-password'
+              >
+                Forgot password?
+              </Link>
+            </div>
           </span>
           <button
             type='submit'

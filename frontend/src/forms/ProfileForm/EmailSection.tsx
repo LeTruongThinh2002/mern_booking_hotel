@@ -10,9 +10,10 @@ export type ChangeEmailType = {
   password: string;
   email: string;
   verify: boolean;
+  refetch: () => void;
 };
 
-const EmailSection = ({email, verify}: ChangeEmailType) => {
+const EmailSection = ({email, verify, refetch}: ChangeEmailType) => {
   const [isEditing, setIsEditing] = useState(false);
   const [password, setPassword] = useState('');
   const [mail, setMail] = useState(email);
@@ -22,9 +23,7 @@ const EmailSection = ({email, verify}: ChangeEmailType) => {
   const handleClick = (event: {target: any}) => {
     setIsEditing(prevIsEditing => !prevIsEditing); // Toggle state with concise logic
     const target = event.target; // Get mouse target
-    if (target.classList.contains('fa-times')) {
-      setMail(email);
-    }
+
     if (target.classList.contains('fa-check' || 'fa-times')) {
       setIsEditing(false);
     }
@@ -42,6 +41,7 @@ const EmailSection = ({email, verify}: ChangeEmailType) => {
       await queryClient.invalidateQueries('validateToken');
       showToast({message: 'Change email successfully!', type: 'SUCCESS'});
       setPassword('');
+      refetch();
     },
     onError: (error: Error) => {
       showToast({message: error.message, type: 'ERROR'});
@@ -53,6 +53,7 @@ const EmailSection = ({email, verify}: ChangeEmailType) => {
     onSuccess: async () => {
       await queryClient.invalidateQueries('validateToken');
       showToast({message: 'Verify email successfully!', type: 'SUCCESS'});
+      refetch();
     },
     onError: (error: Error) => {
       showToast({message: error.message, type: 'ERROR'});
@@ -61,7 +62,14 @@ const EmailSection = ({email, verify}: ChangeEmailType) => {
 
   const handleClickSaveEmail = (event: React.MouseEvent<SVGSVGElement>) => {
     event.preventDefault();
-    mutation.mutate({password, email: mail, verify});
+    mutation.mutate({
+      password,
+      email: mail,
+      verify,
+      refetch: function (): void {
+        throw new Error('Function not implemented.');
+      }
+    });
   };
   const handleClickVerify = () => {
     mutationVerify.mutate();
@@ -69,7 +77,9 @@ const EmailSection = ({email, verify}: ChangeEmailType) => {
 
   return (
     <div className='grid grid-cols-1'>
-      <h3 className='text-lg font-semibold text-slate-200'>Email</h3>
+      <h3 className='text-lg font-semibold select-none text-slate-200'>
+        Email
+      </h3>
       {isEditing ? (
         <div className='grid grid-rows-2 gap-2'>
           <div className='w-full grid grid-cols-[9fr_1fr]'>

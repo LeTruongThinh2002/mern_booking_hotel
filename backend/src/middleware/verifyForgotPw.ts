@@ -14,7 +14,7 @@ const verifyForgotPassword = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.query.token as string;
+  const {token} = req.body;
   if (!token) {
     return res.status(401).json({
       message: 'Unauthorized token'

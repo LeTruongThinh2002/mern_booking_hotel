@@ -1,8 +1,10 @@
 import {RegisterFormData} from './pages/Register';
 import {SignInFormData} from './pages/SignIn';
 import {
+  BookingCard,
   HotelSearchResponse,
   HotelType,
+  MonthlyChart,
   PaymentIntentResponse,
   UserType
 } from '../../backend/src/shared/types';
@@ -10,6 +12,8 @@ import {BookingFormData} from './forms/BookingForm/BookingForm';
 import {ChangeNameType} from './forms/ProfileForm/NameSection';
 import {ChangeEmailType} from './forms/ProfileForm/EmailSection';
 import {ChangePasswordType} from './forms/ProfileForm/PasswordSection';
+import {ForgotFormData} from './pages/ForgotPassword';
+import {ResetPasswordFormData} from './pages/ResetPassword';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
@@ -37,6 +41,58 @@ export const register = async (formData: RegisterFormData) => {
 
   if (!response.ok) {
     throw new Error(responseBody.message);
+  }
+};
+
+export const hotelBlock = async ({hotelId}: any) => {
+  const response = await fetch(`${API_BASE_URL}/api/my-hotels/block`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      hotelId
+    })
+  });
+
+  const responseBody = await response.json();
+
+  if (!response.ok) {
+    throw new Error(responseBody.message[0].msg || responseBody.message);
+  }
+};
+
+export const chartData = async (): Promise<MonthlyChart> => {
+  const response = await fetch(`${API_BASE_URL}/api/my-hotels/chart`, {
+    method: 'POST',
+    credentials: 'include'
+  });
+  if (!response.ok) {
+    throw new Error('failed to fetch my hotels');
+  }
+  return response.json();
+};
+
+export const hotelDelete = async ({hotelId}: any) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/my-hotels/${hotelId}/delete`,
+    {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        hotelId
+      })
+    }
+  );
+
+  const responseBody = await response.json();
+
+  if (!response.ok) {
+    throw new Error(responseBody.message[0].msg || responseBody.message);
   }
 };
 
@@ -126,6 +182,43 @@ export const signIn = async (formData: SignInFormData) => {
     },
     body: JSON.stringify(formData)
   });
+
+  const body = await response.json();
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+  return body;
+};
+
+export const forgotPassword = async (formData: ForgotFormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/auth/forgotpassword`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  });
+
+  const body = await response.json();
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+  return body;
+};
+
+export const verifyForgotPassword = async (formData: ResetPasswordFormData) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/auth/verifyForgotPassword?token=${formData.token}`,
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    }
+  );
 
   const body = await response.json();
   if (!response.ok) {
@@ -307,7 +400,9 @@ export const createRoomBooking = async (formData: BookingFormData) => {
   }
 };
 
-export const fetchMyBookings = async (): Promise<HotelType[]> => {
+export const fetchMyBookings = async (): Promise<
+  [BookingCard[], BookingCard[]]
+> => {
   const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {
     credentials: 'include'
   });

@@ -46,36 +46,28 @@ const Register = () => {
         className='flex flex-col gap-5 lg:w-[800px] sm:w-[500px]'
         onSubmit={onSubmit}
       >
-        <h2
-          className='text-3xl uppercase text-transparent text-center font-bold pointer-events-none'
-          style={{
-            backgroundImage:
-              'url(https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709083583/typeSelected.gif)',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundClip: 'text'
-          }}
-        >
+        <h2 className="text-3xl select-none uppercase text-transparent text-center font-bold pointer-events-none bg-[url('https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709083583/typeSelected.gif')] bg-center bg-cover bg-no-repeat bg-clip-text">
           Create an account
         </h2>
         <div className='grid lg:grid-cols-2 grid-cols-1 gap-5'>
-          <label className=' text-lg font-bold grid gap-2'>
+          <label className='select-none text-lg font-bold grid gap-2'>
             First Name
             <input
               type='text'
-              className='border rounded w-full py-1 px-2 font-normal'
+              placeholder='First name...'
+              className='border text-slate-200 bg-transparent rounded w-full py-1 px-2 font-normal'
               {...register('firstName', {required: 'This field is required'})}
             />
             {errors.firstName && (
               <span className='text-red-500'>{errors.firstName.message}</span>
             )}
           </label>
-          <label className=' text-lg font-bold grid gap-2'>
+          <label className='select-none text-lg font-bold grid gap-2'>
             Last Name
             <input
               type='text'
-              className='border rounded w-full py-1 px-2 font-normal'
+              placeholder='Last name...'
+              className='border text-slate-200 bg-transparent rounded w-full py-1 px-2 font-normal'
               {...register('lastName', {required: 'This field is required'})}
             />
             {errors.lastName && (
@@ -83,22 +75,24 @@ const Register = () => {
             )}
           </label>
         </div>
-        <label className=' text-lg font-bold grid gap-2'>
+        <label className='select-none text-lg font-bold grid gap-2'>
           Email
           <input
             type='email'
-            className='border rounded w-full py-1 px-2 font-normal'
+            placeholder='Email...'
+            className='border text-slate-200 bg-transparent rounded w-full py-1 px-2 font-normal'
             {...register('email', {required: 'This field is required'})}
           />
           {errors.email && (
             <span className='text-red-500'>{errors.email.message}</span>
           )}
         </label>
-        <label className=' text-lg font-bold grid gap-2'>
+        <label className='select-none text-lg font-bold grid gap-2'>
           Password
           <input
             type='password'
-            className='border rounded w-full py-1 px-2 font-normal'
+            placeholder='Password...'
+            className='border text-slate-200 bg-transparent rounded w-full py-1 px-2 font-normal'
             {...register('password', {
               required: 'This field is required',
               minLength: {
@@ -111,11 +105,12 @@ const Register = () => {
             <span className='text-red-500'>{errors.password.message}</span>
           )}
         </label>
-        <label className=' text-lg font-bold grid gap-2'>
+        <label className='select-none text-lg font-bold grid gap-2'>
           Confirm Password
           <input
             type='password'
-            className='border rounded w-full py-1 px-2 font-normal'
+            placeholder='Confirm Password...'
+            className='border text-slate-200 bg-transparent rounded w-full py-1 px-2 font-normal'
             {...register('confirmPassword', {
               validate: val => {
                 if (!val) {

@@ -24,6 +24,28 @@ export type HotelType = {
   lastUpdated: Date;
   newProperty: string;
   bookings: BookingType[];
+  block: boolean;
+};
+
+export type MonthlyChart = {
+  monthlyTotals: MonthlyTotals[];
+  ortherTotals: MonthlyTotals[];
+};
+export type MonthlyTotals = {
+  [month: string]: number;
+};
+
+export type BookingCard = {
+  image: string;
+  hotelName: string;
+  name: string;
+  email: string;
+  cost: number;
+  adult: number;
+  child: number;
+  checkIn: Date;
+  checkOut: Date;
+  key: string;
 };
 
 export type BookingType = {

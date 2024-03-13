@@ -4,17 +4,17 @@ import ProfileForm from '../forms/ProfileForm/ProfileForm';
 import {VscLoading} from 'react-icons/vsc';
 
 const Profile = () => {
-  const {data: currentUser} = useQuery(
+  const {data: currentUser, refetch} = useQuery(
     'fetchCurrentUser',
     apiClient.fetchCurrentUser
   );
   return (
     <div className='flex justify-center'>
       {currentUser ? (
-        <ProfileForm user={currentUser} />
+        <ProfileForm user={currentUser} refetch={refetch} />
       ) : (
         <div className='contain-performance'>
-          <h3 className='grid grid-cols-1 gap-5 place-items-center'>
+          <h3 className='grid select-none grid-cols-1 gap-5 place-items-center'>
             <span>
               <VscLoading className='text-3xl animate-spin' />
             </span>

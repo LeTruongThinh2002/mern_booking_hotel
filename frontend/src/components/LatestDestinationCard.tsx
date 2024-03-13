@@ -26,8 +26,8 @@ const LatestDestinationCard = ({hotel}: Props) => {
         />
       </div>
       <div className='absolute top-0 p-4 grid grid-cols-5 gap-1 bg-black bg-opacity-50 rounded-lg m-4'>
-        {Array.from({length: hotel.starRating}).map(() => (
-          <AiFillStar className='fill-yellow-500 text-lg' />
+        {Array.from({length: hotel.starRating}).map((_, index) => (
+          <AiFillStar key={index} className='fill-yellow-500 text-lg' />
         ))}
       </div>
 

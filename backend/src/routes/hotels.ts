@@ -57,7 +57,7 @@ router.get('/search', async (req: Request, res: Response) => {
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const hotels = await Hotel.find().sort('-lastUpdated');
+    const hotels = await Hotel.find({block: false}).sort('-lastUpdated');
     res.json(hotels);
   } catch (error) {
     console.log('error', error);
@@ -125,6 +125,9 @@ router.post(
     if (!hotel) {
       return res.status(400).json({message: 'Hotel not found'});
     }
+    if (hotel.block === true) {
+      return res.status(400).json({message: 'Hotel is blocked'});
+    }
 
     const totalCost = hotel.pricePerNight * numberOfNights;
 
@@ -156,6 +159,13 @@ router.post(
   verifyToken,
   async (req: Request, res: Response) => {
     try {
+      const hotels = await Hotel.findOne({_id: req.params.hotelId});
+      if (!hotels) {
+        return res.status(400).json({message: 'Hotel not found'});
+      }
+      if (hotels.block === true) {
+        return res.status(400).json({message: 'Hotel is blocked'});
+      }
       const paymentIntentId = req.body.paymentIntentId;
 
       const paymentIntent = await stripe.paymentIntents.retrieve(
@@ -255,6 +265,8 @@ const constructSearchQuery = (queryParams: any) => {
       $lte: parseInt(queryParams.maxPrice).toString()
     };
   }
+
+  constructedQuery.block = false;
 
   return constructedQuery;
 };

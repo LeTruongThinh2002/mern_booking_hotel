@@ -39,7 +39,7 @@ const SearchBar = () => {
     return <></>;
   }
   return (
-    <div className='container pb-10 mx-auto'>
+    <div className='container pb-10 mx-auto z-40'>
       <form
         data-aos='fade-right'
         data-aos-duration='1500'

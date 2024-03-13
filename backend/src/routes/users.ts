@@ -63,7 +63,7 @@ router.post(
       }
       user.firstName = firstName;
       user.lastName = lastName;
-      user.save();
+      await user.save();
 
       res.status(200).send({message: 'Change Info Successfully!'});
     } catch (error) {
@@ -122,7 +122,7 @@ router.post(
           html: `<a href="http://localhost:8888/api/users/verify?token=${token}" target="_blank">Click here to verify your email!</a>` // html body
         });
       }
-      user.save();
+      await user.save();
       res.status(200).send({message: 'Change Info Successfully!'});
     } catch (error) {
       console.log(error);
@@ -181,7 +181,7 @@ router.post(
         });
       }
       user.verify = true;
-      user.save();
+      await user.save();
       res.status(200).send({message: 'Verify Successfully!'});
     } catch (error) {
       console.log(error);
@@ -237,7 +237,7 @@ router.post(
       }
       //change password and save
       user.password = newPassword;
-      user.save();
+      await user.save();
       //login again with the new password
       res.cookie('auth_token', '', {
         expires: new Date(0)

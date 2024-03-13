@@ -4,7 +4,7 @@ import multer from 'multer';
 import Hotel from '../models/hotels';
 import verifyToken from '../middleware/auth';
 import {body} from 'express-validator';
-import {HotelType} from '../shared/types';
+import {HotelType, MonthlyTotals} from '../shared/types';
 
 const router = express.Router();
 
@@ -61,10 +61,114 @@ router.post(
   }
 );
 
+router.post('/block', verifyToken, async (req: Request, res: Response) => {
+  try {
+    const {hotelId} = req.body;
+
+    const hotel = await Hotel.findOne({_id: hotelId});
+    if (!hotel) {
+      return res.status(400).json({message: 'Hotel not found'});
+    }
+    hotel.block = hotel.block ? false : true;
+    await hotel.save();
+    res.status(200).send({message: 'Success!'});
+  } catch (e) {
+    res.status(500).json({message: 'Error fetching hotel'});
+  }
+});
+
+router.delete(
+  '/:hotelId/delete',
+  verifyToken,
+  async (req: Request, res: Response) => {
+    try {
+      const {hotelId} = req.body;
+
+      const hotel = await Hotel.findOneAndDelete({_id: hotelId});
+      if (!hotel) {
+        return res.status(400).json({message: 'Hotel not found'});
+      }
+
+      res.status(200).send({message: 'Success!'});
+    } catch (e) {
+      res.status(500).json({message: 'Error fetching hotel'});
+    }
+  }
+);
+
 router.get('/', verifyToken, async (req: Request, res: Response) => {
   try {
     const hotels = await Hotel.find({userId: req.userId});
     res.json(hotels);
+  } catch (e) {
+    res.status(500).json({message: 'Error fetching hotel'});
+  }
+});
+
+router.post('/chart', verifyToken, async (req: Request, res: Response) => {
+  try {
+    const {year} = req.body;
+
+    const hotels = await Hotel.find();
+    const myHotels = await Hotel.find({
+      userId: req.userId
+    });
+
+    const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+    const ortherTotals: MonthlyTotals = {};
+    const monthlyTotals: MonthlyTotals = {};
+    months.reduce((acc, month) => {
+      const totalCostForMonth = myHotels.reduce((sum, hotel) => {
+        // Lọc các booking trong tháng và năm
+        const bookingsForMonth = hotel.bookings.filter(booking => {
+          const bookingMonth = booking.checkIn.getMonth();
+          const bookingYear = booking.checkIn.getFullYear();
+
+          return (
+            months[bookingMonth] === month &&
+            bookingYear === (year || new Date().getFullYear())
+          );
+        });
+
+        // Tính tổng chi phí cho các booking trong tháng
+        const totalCostForMonthForHotel = bookingsForMonth.reduce(
+          (sum, booking) => sum + booking.totalCost,
+          0
+        );
+
+        return sum + totalCostForMonthForHotel;
+      }, 0);
+
+      acc[month] = totalCostForMonth;
+      return acc;
+    }, monthlyTotals);
+    months.reduce((acc, month) => {
+      const totalCostForMonth = hotels.reduce((sum, hotel) => {
+        // Lọc các booking trong tháng và năm
+        const bookingsForMonth = hotel.bookings.filter(booking => {
+          const bookingMonth = booking.checkIn.getMonth();
+          const bookingYear = booking.checkIn.getFullYear();
+
+          return (
+            months[bookingMonth] === month &&
+            bookingYear === (year || new Date().getFullYear())
+          );
+        });
+
+        // Tính tổng chi phí cho các booking trong tháng
+        const totalCostForMonthForHotel = bookingsForMonth.reduce(
+          (sum, booking) => sum + booking.totalCost,
+          0
+        );
+
+        return sum + totalCostForMonthForHotel;
+      }, 0);
+
+      acc[month] = totalCostForMonth;
+      return acc;
+    }, ortherTotals);
+    res.json({monthlyTotals, ortherTotals});
   } catch (e) {
     res.status(500).json({message: 'Error fetching hotel'});
   }

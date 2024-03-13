@@ -48,7 +48,11 @@ const ImagesSection = () => {
         <input
           multiple
           accept='image/*'
-          className='w-full text-gray-400 font-normal'
+          className='w-full text-slate-400 font-normal file:mr-4 file:py-2 file:px-4
+          file:rounded-full file:border-0
+          file:text-sm file:font-semibold
+          file:bg-violet-50 file:text-violet-700
+          hover:file:bg-violet-700 hover:file:text-slate-200'
           type='file'
           {...register('imageFiles', {
             validate: imageFiles => {

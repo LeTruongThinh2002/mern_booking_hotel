@@ -17,6 +17,9 @@ import Booking from './pages/Booking';
 import MyBookings from './pages/MyBookings';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import Dashboard from './pages/Dashboard';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const App = () => {
   const {isLoggedIn} = useAppContext();
@@ -63,6 +66,22 @@ const App = () => {
             </Layout>
           }
         />
+        <Route
+          path='/forgot-password'
+          element={
+            <Layout>
+              <ForgotPassword />
+            </Layout>
+          }
+        />
+        <Route
+          path='/reset-password/:token'
+          element={
+            <Layout>
+              <ResetPassword />
+            </Layout>
+          }
+        />
         {isLoggedIn && (
           <>
             <Route
@@ -70,6 +89,14 @@ const App = () => {
               element={
                 <Layout>
                   <Profile />
+                </Layout>
+              }
+            />
+            <Route
+              path='/dashboard'
+              element={
+                <Layout>
+                  <Dashboard />
                 </Layout>
               }
             />

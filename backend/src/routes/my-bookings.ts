@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express';
 import verifyToken from '../middleware/auth';
 import Hotel from '../models/hotels';
-import {HotelType} from '../shared/types';
+import {HotelType, BookingCard} from '../shared/types';
 
 const router = express.Router();
 
@@ -24,8 +24,44 @@ router.get('/', verifyToken, async (req: Request, res: Response) => {
 
       return hotelWithUserBookings;
     });
+    const toDay = new Date();
+    let access: BookingCard[] = [];
+    let denied: BookingCard[] = [];
+    results.map(hotel => {
+      hotel.bookings.map(book => {
+        const date = new Date(book.checkOut);
 
-    res.status(200).send(results);
+        if (date < toDay || hotel.block) {
+          denied.push({
+            image: hotel.imageUrls[0],
+            hotelName: hotel.name,
+            name: book.firstName + ' ' + book.lastName,
+            email: book.email,
+            cost: book.totalCost,
+            adult: book.adultCount,
+            child: book.childCount,
+            checkIn: book.checkIn,
+            checkOut: book.checkOut,
+            key: book._id
+          });
+        } else {
+          access.push({
+            image: hotel.imageUrls[0],
+            hotelName: hotel.name,
+            name: book.firstName + ' ' + book.lastName,
+            email: book.email,
+            cost: book.totalCost,
+            adult: book.adultCount,
+            child: book.childCount,
+            checkIn: book.checkIn,
+            checkOut: book.checkOut,
+            key: book._id
+          });
+        }
+      });
+    });
+    const myBooking = [access, denied];
+    res.status(200).send(myBooking);
   } catch (error) {
     console.log(error);
     res.status(500).json({message: 'Unable to fetch bookings'});

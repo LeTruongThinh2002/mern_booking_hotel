@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 import verifyToken from '../middleware/auth';
 import nodemailer from 'nodemailer';
 import verifyForgotPassword from '../middleware/verifyForgotPw';
-import * as crypto from 'crypto';
 const router = express.Router();
 
 const transporter = nodemailer.createTransport({
@@ -18,17 +17,6 @@ const transporter = nodemailer.createTransport({
     pass: process.env.PWD_API_SMTP
   }
 });
-
-function createSHA3Hash(data: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    try {
-      const hash = crypto.createHash('sha3-512').update(data).digest('hex');
-      resolve(hash);
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
 
 router.post(
   '/login',
@@ -110,11 +98,11 @@ router.post(
         to: email, // list of receivers
         subject: 'Confirm your password reset, valid for 5 minutes ✅', // Subject line
         html: `<h2 style="color:red">If you do not request a new password change, please do not click anywhere in this email</h2>
-        If you want to change a new password for your account, click <a href="http://localhost:8888/api/auth/verifyForgotPassword?token=${token}" target="_blank">here</a>` // html body
+        If you want to change a new password for your account, click <a href="http://localhost:5173/reset-password/${token}" target="_blank">here</a>` // html body
       });
-      user.save();
+      await user.save();
 
-      res.status(200).send();
+      res.status(200).send({message: 'success'});
     } catch (error) {
       console.log(error);
       res.status(500).send({message: 'Something went wrong!'});
@@ -153,9 +141,9 @@ router.post(
       }
 
       user.password = newPassword;
-      user.save();
+      await user.save();
 
-      res.status(200).send();
+      res.status(200).send({message: `Success`});
     } catch (error) {
       console.log(error);
       res.status(500).send({message: 'Something went wrong!'});

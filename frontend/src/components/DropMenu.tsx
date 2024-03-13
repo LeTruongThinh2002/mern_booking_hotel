@@ -1,5 +1,5 @@
 import {Popover} from '@headlessui/react';
-import {TbMapPinCheck} from 'react-icons/tb';
+import {TbMapPinCheck, TbPigMoney} from 'react-icons/tb';
 import {BsBuildingCheck, BsPersonBadge} from 'react-icons/bs';
 import {HiMenu} from 'react-icons/hi';
 import {VscSignOut} from 'react-icons/vsc';
@@ -26,6 +26,17 @@ const solutions = [
     href: '/my-hotels',
     icon: (
       <BsBuildingCheck
+        className='text-3xl text-gray-600 group-hover:text-slate-200'
+        aria-hidden='true'
+      />
+    )
+  },
+  {
+    name: 'Dashboard',
+    description: 'Summary of spending and income data',
+    href: '/dashboard',
+    icon: (
+      <TbPigMoney
         className='text-3xl text-gray-600 group-hover:text-slate-200'
         aria-hidden='true'
       />

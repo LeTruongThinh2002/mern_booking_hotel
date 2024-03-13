@@ -2,6 +2,7 @@ import unidecode from 'unidecode';
 import {HotelType} from '../../../backend/src/shared/types';
 import {useSearchContext} from '../contexts/SearchContext';
 import {useNavigate} from 'react-router-dom';
+import PulseNone from './PulseNone';
 type Props = {
   hotels: HotelType[];
 };
@@ -27,7 +28,13 @@ const TrendingLocations = ({hotels}: Props) => {
       .reverse() || [];
 
   if (trendingLocations.length === 0) {
-    return <div>No trending Locations</div>;
+    return (
+      <div className='flex lg:flex-row flex-col'>
+        <PulseNone />
+        <PulseNone />
+        <PulseNone />
+      </div>
+    );
   }
   const topTrending = trendingLocations.splice(0, 2);
   const bottomTrending = trendingLocations.splice(0, 3);
@@ -41,7 +48,7 @@ const TrendingLocations = ({hotels}: Props) => {
         {topTrending.map((lct, index) => (
           <div
             key={index}
-            className='relative  hover:lg:z-50 hover:lg:scale-125 cursor-pointer overflow-hidden rounded-md hover:shadow-2xl hover:shadow-slate-400 hover:transition-all hover:duration-300'
+            className='relative  hover:lg:z-20 hover:lg:scale-125 cursor-pointer overflow-hidden rounded-md hover:shadow-2xl hover:shadow-slate-400 hover:transition-all hover:duration-300'
             onClick={() => handleSubmit(lct.city)}
           >
             <div
@@ -80,7 +87,7 @@ const TrendingLocations = ({hotels}: Props) => {
           <div
             onClick={() => handleSubmit(lct.city)}
             key={index}
-            className='relative  hover:lg:scale-125 hover:lg:z-50 cursor-pointer overflow-hidden rounded-md hover:shadow-2xl hover:shadow-slate-400 hover:transition-all hover:duration-300'
+            className='relative  hover:lg:scale-125 hover:lg:z-20 cursor-pointer overflow-hidden rounded-md hover:shadow-2xl hover:shadow-slate-400 hover:transition-all hover:duration-300'
           >
             <div
               className='h-[300px]'

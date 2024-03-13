@@ -9,9 +9,10 @@ import {useAppContext} from '../../contexts/AppContext';
 export type ChangeNameType = {
   firstName: string;
   lastName: string;
+  refetch: () => void;
 };
 
-const NameSection = ({firstName, lastName}: ChangeNameType) => {
+const NameSection = ({firstName, lastName, refetch}: ChangeNameType) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingLastName, setIsEditingLastName] = useState(false);
   const [valueFirstName, setValueFirstName] = useState(firstName);
@@ -32,9 +33,9 @@ const NameSection = ({firstName, lastName}: ChangeNameType) => {
   const handleClickLastName = (event: {target: any}) => {
     setIsEditingLastName(prevIsEditing => !prevIsEditing); // Toggle state with concise logic
     const target = event.target; // Get mouse target
-    if (target.classList.contains('fa-check') && valueLastName.length === 0) {
-      setValueLastName(lastName);
-    }
+    // if (target.classList.contains('fa-check') && valueLastName.length === 0) {
+    //   setValueLastName(lastName);
+    // }
     if (target.classList.contains('fa-check' || 'fa-times')) {
       setIsEditingLastName(false);
     }
@@ -51,6 +52,7 @@ const NameSection = ({firstName, lastName}: ChangeNameType) => {
     onSuccess: async () => {
       await queryClient.invalidateQueries('validateToken');
       showToast({message: 'Change name successfully!', type: 'SUCCESS'});
+      refetch();
     },
     onError: (error: Error) => {
       showToast({message: error.message, type: 'ERROR'});
@@ -59,17 +61,31 @@ const NameSection = ({firstName, lastName}: ChangeNameType) => {
 
   const handleClickSaveFirstName = (event: React.MouseEvent<SVGSVGElement>) => {
     event.preventDefault();
-    mutation.mutate({firstName: valueFirstName, lastName});
+    mutation.mutate({
+      firstName: valueFirstName,
+      lastName,
+      refetch: function (): void {
+        throw new Error('Function not implemented.');
+      }
+    });
   };
   const handleClickSaveLastName = (event: React.MouseEvent<SVGSVGElement>) => {
     event.preventDefault();
-    mutation.mutate({firstName, lastName: valueLastName});
+    mutation.mutate({
+      firstName,
+      lastName: valueLastName,
+      refetch: function (): void {
+        throw new Error('Function not implemented.');
+      }
+    });
   };
 
   return (
     <div className='grid lg:grid-cols-2 grid-cols-1 gap-4'>
       <div className='grid grid-cols-1'>
-        <h3 className='text-lg font-semibold text-slate-200'>First Name</h3>
+        <h3 className='text-lg font-semibold select-none text-slate-200'>
+          First Name
+        </h3>
         {isEditing ? (
           <div className='grid grid-cols-[8fr_2fr] w-full'>
             <DetailRowInput
@@ -97,7 +113,9 @@ const NameSection = ({firstName, lastName}: ChangeNameType) => {
         )}
       </div>
       <div className='grid grid-cols-1'>
-        <h3 className='text-lg font-semibold text-slate-200'>Last Name</h3>
+        <h3 className='text-lg font-semibold select-none text-slate-200'>
+          Last Name
+        </h3>
         {isEditingLastName ? (
           <div className='grid grid-cols-[8fr_2fr] w-full'>
             <DetailRowInput

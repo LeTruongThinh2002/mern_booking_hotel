@@ -65,7 +65,9 @@ const PasswordSection = () => {
 
   return (
     <div className='grid grid-cols-1'>
-      <h3 className='text-lg font-semibold text-slate-200'>Password</h3>
+      <h3 className='text-lg font-semibold select-none text-slate-200'>
+        Password
+      </h3>
       {isEditing ? (
         <div className='grid grid-rows-3 gap-2'>
           <div className='w-full grid grid-cols-[9fr_1fr]'>
