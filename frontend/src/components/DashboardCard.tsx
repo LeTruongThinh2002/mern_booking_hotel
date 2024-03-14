@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 type Props = {
   icon: any;
   title: string;
-  body: string;
+  body: any;
 };
 
 const DashboardCard = ({icon, title, body}: Props) => {

@@ -4,18 +4,28 @@ import {VscLoading} from 'react-icons/vsc';
 import DashboardCard from '../components/DashboardCard';
 import {IoLogoUsd} from 'react-icons/io';
 import {GiCash} from 'react-icons/gi';
-import {RiHandCoinLine} from 'react-icons/ri';
+import {RiHandCoinLine, RiHotelLine} from 'react-icons/ri';
 import numeral from 'numeral';
 import ChartData from '../components/ChartData';
 import PulseNone from '../components/PulseNone';
-//import {useState} from 'react';
+import {BsDatabaseFillDown} from 'react-icons/bs';
+import {useEffect, useState} from 'react';
+import {MdDateRange} from 'react-icons/md';
 
 const Dashboard = () => {
-  //const [year, setYear] = useState(new Date().getFullYear());
-  const {data: chartData} = useQuery('chartData', apiClient.chartData);
-  // const handleChangeYear = (change: number) => {
-  //   setYear(change);
-  // };
+  const defaultYear = new Date().getFullYear();
+  const [year, setYear] = useState(defaultYear);
+
+  const {data: chartData, refetch} = useQuery('chartData', () =>
+    apiClient.chartData({year})
+  );
+  useEffect(() => {
+    refetch();
+  }, [year]);
+
+  const handleChangeYear = (change: number) => {
+    setYear(change);
+  };
 
   const {data: user} = useQuery('fetchCurrentUser', apiClient.fetchCurrentUser);
 
@@ -25,9 +35,11 @@ const Dashboard = () => {
   let totalCost = 0;
   let totalBooking = 0;
   let totalSpending = 0;
+  let totalHotel = 0;
   if (hotelData) {
     hotelData.map(hotel => {
       if (hotel.userId === user?._id) {
+        totalHotel += 1;
         totalBooking += hotel.bookings.length;
         hotel.bookings.map(booking => {
           totalCost += booking.totalCost;
@@ -51,42 +63,68 @@ const Dashboard = () => {
           </h1>
           <div className='grid lg:grid-cols-2 lg:text-left text-center grid-cols-1 lg:gap-5 gap-1'>
             <DashboardCard
-              data-aos='fade-right'
-              data-aos-duration='2000'
               title='Online Profit'
               body={numeral(totalCost).format('0,0.00$')}
               icon={
-                <IoLogoUsd className='text-3xl text-green-600 scale-150 text-slate-200 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
+                <IoLogoUsd className='text-3xl text-green-400 scale-150 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
               }
             />
             <DashboardCard
-              data-aos='fade-left'
-              data-aos-duration='1500'
               title='Guest Booking'
               body={totalBooking + ` times`}
               icon={
-                <GiCash className='text-3xl text-yellow-400 scale-150 text-slate-200 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
+                <GiCash className='text-3xl text-yellow-400 scale-150 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
               }
             />
             <DashboardCard
-              data-aos='fade-top'
-              data-aos-duration='1000'
               title='Spending'
               body={numeral(totalSpending).format('0,0.00$')}
               icon={
-                <RiHandCoinLine className='text-3xl text-red-700 scale-150 text-slate-200 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
+                <RiHandCoinLine className='text-3xl text-lime-300 scale-150 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
               }
             />
             <DashboardCard
-              data-aos='fade-bottom'
-              data-aos-duration='2500'
               title='Profit Ratio'
               body={
                 numeral(profitPayment).format('0,0.00$') +
                 ` (${numeral(profitPayment / totalCost).format('0.00%')})`
               }
               icon={
-                <RiHandCoinLine className='text-3xl text-red-700 scale-150 text-slate-200 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
+                <BsDatabaseFillDown className='text-3xl text-red-600 scale-150 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
+              }
+            />
+            <DashboardCard
+              title='Your Register'
+              body={totalHotel + ` hotel`}
+              icon={
+                <RiHotelLine className='text-3xl text-purple-400 scale-150 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
+              }
+            />
+            <DashboardCard
+              title='Year data'
+              body={
+                <select
+                  onChange={event =>
+                    handleChangeYear(Number(event.target.value))
+                  }
+                  title='Year data'
+                  className='rounded-md w-full text-center border-b border-slate-200 group-hover:border-slate-800 bg-transparent text-slate-200 group-hover:text-slate-800'
+                >
+                  <option value={defaultYear}>{defaultYear}</option>
+                  {[
+                    defaultYear + 1,
+                    defaultYear + 2,
+                    defaultYear + 3,
+                    defaultYear + 4
+                  ].map(num => (
+                    <option key={num} value={num}>
+                      {num}
+                    </option>
+                  ))}
+                </select>
+              }
+              icon={
+                <MdDateRange className='text-3xl text-rose-400 scale-150 rounded-full p-1 shadow-md shadow-black group-hover:bg-sky-900' />
               }
             />
           </div>
@@ -102,7 +140,7 @@ const Dashboard = () => {
         </div>
       )}
       {chartData ? (
-        <ChartData chartData={chartData} year={null} />
+        <ChartData chartData={chartData} year={year} />
       ) : (
         <PulseNone />
       )}

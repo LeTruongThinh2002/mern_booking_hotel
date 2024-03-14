@@ -63,10 +63,16 @@ export const hotelBlock = async ({hotelId}: any) => {
   }
 };
 
-export const chartData = async (): Promise<MonthlyChart> => {
+export const chartData = async ({year}: any): Promise<MonthlyChart> => {
   const response = await fetch(`${API_BASE_URL}/api/my-hotels/chart`, {
     method: 'POST',
-    credentials: 'include'
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      year
+    })
   });
   if (!response.ok) {
     throw new Error('failed to fetch my hotels');

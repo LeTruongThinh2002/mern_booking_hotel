@@ -27,6 +27,11 @@ export type HotelType = {
   block: boolean;
 };
 
+export type ChartDefaultType = {
+  hotelName: string;
+  bookings: number;
+  profits: number;
+};
 export type MonthlyChart = {
   monthlyTotals: MonthlyTotals[];
   ortherTotals: MonthlyTotals[];

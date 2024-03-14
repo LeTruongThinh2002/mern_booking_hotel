@@ -108,7 +108,6 @@ router.get('/', verifyToken, async (req: Request, res: Response) => {
 router.post('/chart', verifyToken, async (req: Request, res: Response) => {
   try {
     const {year} = req.body;
-
     const hotels = await Hotel.find();
     const myHotels = await Hotel.find({
       userId: req.userId
