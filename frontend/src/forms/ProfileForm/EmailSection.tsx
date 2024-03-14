@@ -52,7 +52,7 @@ const EmailSection = ({email, verify, refetch}: ChangeEmailType) => {
   const mutationVerify = useMutation(apiClient.vefiryEmail, {
     onSuccess: async () => {
       await queryClient.invalidateQueries('validateToken');
-      showToast({message: 'Verify email successfully!', type: 'SUCCESS'});
+      showToast({message: 'Send verify email successfully!', type: 'SUCCESS'});
       refetch();
     },
     onError: (error: Error) => {

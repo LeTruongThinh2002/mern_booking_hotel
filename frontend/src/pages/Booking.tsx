@@ -7,6 +7,7 @@ import {useEffect, useState} from 'react';
 import BookingDetailsSummary from '../components/BookingDetailsSummary';
 import {Elements} from '@stripe/react-stripe-js';
 import {useAppContext} from '../contexts/AppContext';
+import LoadingFailed from '../components/LoadingFailed';
 
 const Booking = () => {
   const {stripePromise} = useAppContext();
@@ -78,16 +79,7 @@ const Booking = () => {
             currentUser={currentUser}
           />
         </Elements>
-      )) || (
-        <div>
-          <div className='flex text-2xl justify-center'>
-            Phòng đã đặt tại khách sạn vẫn còn hiệu lực.
-          </div>
-          <div className='flex text-2xl justify-center'>
-            Vui lòng kiểm tra lại!
-          </div>
-        </div>
-      )}
+      )) || <LoadingFailed />}
     </div>
   );
 };

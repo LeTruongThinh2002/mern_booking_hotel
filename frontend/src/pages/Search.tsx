@@ -110,7 +110,7 @@ const Search = () => {
           >
             <option value=''>Sort By</option>
             <option value='starRating'>Star rating</option>
-            <option value='pricePerNightASC'>Min Price Per Night</option>
+            <option value='pricePerNightAsc'>Min Price Per Night</option>
             <option value='pricePerNightDesc'>Max Price Per Night</option>
           </select>
         </div>

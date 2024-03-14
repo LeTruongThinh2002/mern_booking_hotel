@@ -2,6 +2,8 @@ import {useQuery} from 'react-query';
 import * as apiClient from '../api-client';
 import CarouselAccessCard from '../components/CarouselAccessCard';
 
+import LoadingFailed from '../components/LoadingFailed';
+
 const MyBookings = () => {
   const {data: bookingData} = useQuery(
     'fetchMyBookings',
@@ -15,11 +17,7 @@ const MyBookings = () => {
     !bookingData ||
     (bookingData[0].length === 0 && bookingData[1].length === 0)
   ) {
-    return (
-      <span className='select-none flex justify-center text-3xl'>
-        No bookings found
-      </span>
-    );
+    return <LoadingFailed />;
   }
 
   return (

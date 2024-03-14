@@ -6,6 +6,7 @@ import {BiHotel, BiMoney, BiStar} from 'react-icons/bi';
 import CarouselDetail from '../components/CarouselDetail';
 import {useAppContext} from '../contexts/AppContext';
 import {useState} from 'react';
+import LoadingFailed from '../components/LoadingFailed';
 
 const MyHotels = () => {
   const [showDescription, setShowDescription] = useState(-1);
@@ -53,7 +54,7 @@ const MyHotels = () => {
   };
 
   if (!hotelData) {
-    return <span>No hotels founded</span>;
+    return <LoadingFailed />;
   }
 
   return (

@@ -89,7 +89,7 @@ const ChartData = ({chartData, year}: Props) => {
     }
   };
   return (
-    <div className='flex items-center'>
+    <div className='grid grid-cols-1 place-items-center'>
       <Line data={data} options={options} width={500} height={500} />
     </div>
   );

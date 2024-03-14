@@ -84,7 +84,7 @@ const DropMenu = () => {
   };
   return (
     <Popover className={'relative'}>
-      <Popover.Button className='flex justify-end items-center text-3xl font-bold text-slate-200'>
+      <Popover.Button className='flex justify-end items-center text-3xl font-bold text-slate-200 mr-5'>
         <HiMenu aria-hidden='true' />
       </Popover.Button>
       <Popover.Panel className='absolute right-1/2 z-10 mt-2 flex w-screen max-w-lg -translate-x-1/2 px-4 transform translate-x-[10px]'>

@@ -1,7 +1,7 @@
 import {useQuery} from 'react-query';
 import * as apiClient from '../api-client';
 import ProfileForm from '../forms/ProfileForm/ProfileForm';
-import {VscLoading} from 'react-icons/vsc';
+import LoadingFailed from '../components/LoadingFailed';
 
 const Profile = () => {
   const {data: currentUser, refetch} = useQuery(
@@ -9,20 +9,15 @@ const Profile = () => {
     apiClient.fetchCurrentUser
   );
   return (
-    <div className='flex justify-center'>
+    <>
       {currentUser ? (
-        <ProfileForm user={currentUser} refetch={refetch} />
-      ) : (
-        <div className='contain-performance'>
-          <h3 className='grid select-none grid-cols-1 gap-5 place-items-center'>
-            <span>
-              <VscLoading className='text-3xl animate-spin' />
-            </span>
-            <span>Loading profile failed... Please reload this page!</span>
-          </h3>
+        <div className='flex justify-center'>
+          <ProfileForm user={currentUser} refetch={refetch} />
         </div>
+      ) : (
+        <LoadingFailed />
       )}
-    </div>
+    </>
   );
 };
 
