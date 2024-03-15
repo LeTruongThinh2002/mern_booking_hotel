@@ -11,6 +11,7 @@ import PulseNone from '../components/PulseNone';
 import {BsDatabaseFillDown} from 'react-icons/bs';
 import {useEffect, useState} from 'react';
 import {MdDateRange} from 'react-icons/md';
+import LoadingFailed from '../components/LoadingFailed';
 
 const Dashboard = () => {
   const defaultYear = new Date().getFullYear();
@@ -130,14 +131,7 @@ const Dashboard = () => {
           </div>
         </div>
       ) : (
-        <div className='contain-performance'>
-          <h3 className='grid grid-cols-1 gap-5 place-items-center'>
-            <span>
-              <VscLoading className='text-3xl animate-spin' />
-            </span>
-            <span>Loading data failed... Please reload this page!</span>
-          </h3>
-        </div>
+        <LoadingFailed />
       )}
       {chartData ? (
         <ChartData chartData={chartData} year={year} />
