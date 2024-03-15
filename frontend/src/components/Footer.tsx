@@ -4,7 +4,7 @@ const Footer = () => {
   const urls = useLocation();
   return (
     <>
-      <div className='bg-transparent py-10'>
+      <div className='bg-slate-900 mt-5 py-10'>
         <div className='container mx-auto flex lg:flex-row flex-col gap-2 justify-between items-center'>
           <span className='text-3xl font-bold tracking-tight select-none'>
             Booking.com

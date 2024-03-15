@@ -35,7 +35,12 @@ const SearchBar = () => {
   const minDate = new Date();
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() + 1);
-  if (urls.pathname === '/sign-in' || urls.pathname === '/register') {
+  if (
+    urls.pathname.startsWith('/sign-in') ||
+    urls.pathname.startsWith('/register') ||
+    urls.pathname.startsWith('/forgot-password') ||
+    urls.pathname.startsWith('/reset-password')
+  ) {
     return <></>;
   }
   return (
@@ -44,40 +49,40 @@ const SearchBar = () => {
         data-aos='fade-right'
         data-aos-duration='1500'
         onSubmit={handleSubmit}
-        className='-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4'
+        className='-mt-8 p-3 bg-gradient-to-r from-sky-600 via-pink-500 to-yellow-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4'
       >
-        <div className='flex flex-row items-center flex-1 bg-white p-1'>
+        <div className='flex flex-row rounded-md bg-slate-800 items-center flex-1 p-1'>
           <MdTravelExplore size={25} className='m-r2' />
           <input
             placeholder='Where are you going'
-            className='text-md w-full p-1 focus:outline-none'
+            className='text-md bg-transparent text-slate-200 w-full p-1 focus:outline-none'
             value={destination}
             onChange={e => setDestination(e.target.value)}
           />
         </div>
-        <div className='flex py-1 bg-white px-2'>
-          <label className='items-center flex'>
+        <div className='flex py-1 rounded-md bg-slate-800 px-2'>
+          <span className='items-center flex'>
             Adults:
             <input
               min={1}
               max={20}
-              className='p-1 w-full focus:outlie-none font-bold'
+              className='p-1 w-full bg-transparent text-slate-200 focus:outlie-none font-bold'
               type='number'
               value={adultCount}
               onChange={e => setAdultCount(parseInt(e.target.value))}
             />
-          </label>
-          <label className='items-center flex'>
+          </span>
+          <span className='items-center text-slate-200 flex'>
             Children:
             <input
               min={0}
               max={20}
-              className='p-1 w-full focus:outlie-none font-bold'
+              className='p-1 w-full bg-transparent text-slate-200 focus:outlie-none font-bold'
               type='number'
               value={childCount}
               onChange={e => setChildCount(parseInt(e.target.value))}
             />
-          </label>
+          </span>
         </div>
         <div>
           <DatePicker
@@ -93,7 +98,7 @@ const SearchBar = () => {
             minDate={minDate}
             maxDate={new Date(checkOut.getTime() - 86400000)}
             placeholderText='Check-in Date'
-            className='w-full bg-white p-2 focus:outline-none'
+            className='w-full bg-slate-800 h-[40px] rounded-md text-slate-200 p-2 focus:outline-none'
             wrapperClassName='min-w-full'
           />
         </div>
@@ -111,15 +116,19 @@ const SearchBar = () => {
             minDate={new Date(checkIn.getTime() + 86400000)}
             maxDate={maxDate}
             placeholderText='Check-out Date'
-            className='w-full bg-white p-2 focus:outline-none'
+            className='w-full  bg-slate-800 h-[40px] rounded-md text-slate-200 p-2 focus:outline-none'
             wrapperClassName='min-w-full'
           />
         </div>
-        <div className='flex gap-1'>
-          <button className='w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500'>
+        <div className='flex lg:col-start-5 lg:col-end-5 col-start-2 col-end-2 gap-2'>
+          <button
+            className={`w-2/3 bg-gradient-to-r from-sky-600 to-red-500 rounded-md text-slate-100 h-full p-2 font-bold text-xl shadow-md shadow-slate-800 hover:bg-[url('https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709083583/typeSelected.gif')] hover:bg-no-repeat hover:bg-center hover:bg-cover hover:text-slate-800`}
+          >
             Search
           </button>
-          <button className='w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500'>
+          <button
+            className={`w-1/3 bg-red-700 rounded-md text-slate-100 h-full p-2 font-bold text-xl hover:shadow-md hover:shadow-slate-800 hover:bg-[url('https://res.cloudinary.com/dd0tbhnzl/image/upload/v1709083583/typeSelected.gif')] hover:bg-no-repeat hover:bg-center hover:bg-cover hover:text-slate-800`}
+          >
             Clear
           </button>
         </div>

@@ -5,6 +5,7 @@ import {BsBuildingCheck, BsPersonBadge} from 'react-icons/bs';
 import {TbMapPinCheck, TbPigMoney} from 'react-icons/tb';
 import DropMenu from './DropMenu';
 import {useEffect, useMemo, useState} from 'react';
+import HeaderIcon from './HeaderIcon';
 
 const Header = () => {
   const [size, setSize] = useState(window.innerWidth);
@@ -38,35 +39,34 @@ const Header = () => {
           <>
             {isLargeScreen ? (
               <span className='grid grid-cols-5 lg:gap-20 gap-14'>
-                <Link
+                <HeaderIcon
                   title='Your booking'
-                  className='flex items-center text-3xl '
                   to='/my-bookings'
-                >
-                  <TbMapPinCheck className='hover:scale-150 hover:text-yellow-300' />
-                </Link>
-
-                <Link
+                  icon={
+                    <TbMapPinCheck className='hover:scale-150 hover:text-yellow-300' />
+                  }
+                />
+                <HeaderIcon
                   title='Your hotels'
-                  className='flex items-center text-3xl'
                   to='/my-hotels'
-                >
-                  <BsBuildingCheck className='hover:scale-150 hover:text-yellow-300' />
-                </Link>
-                <Link
+                  icon={
+                    <BsBuildingCheck className='hover:scale-150 hover:text-yellow-300' />
+                  }
+                />
+                <HeaderIcon
                   title='Dashboard'
-                  className='flex items-center text-3xl '
                   to='/dashboard'
-                >
-                  <TbPigMoney className='hover:scale-150 hover:text-yellow-300' />
-                </Link>
-                <Link
+                  icon={
+                    <TbPigMoney className='hover:scale-150 hover:text-yellow-300' />
+                  }
+                />
+                <HeaderIcon
                   title='Profile'
-                  className='flex items-center text-3xl'
                   to='/profile'
-                >
-                  <BsPersonBadge className='hover:scale-150 hover:text-yellow-300' />
-                </Link>
+                  icon={
+                    <BsPersonBadge className='hover:scale-150 hover:text-yellow-300' />
+                  }
+                />
                 <SignOutButton />
               </span>
             ) : (

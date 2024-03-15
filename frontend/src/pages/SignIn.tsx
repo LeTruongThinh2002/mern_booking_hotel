@@ -37,7 +37,7 @@ const SignIn = () => {
   });
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex my-5 justify-center'>
       <form
         data-aos='fade-right'
         data-aos-duration='1500'

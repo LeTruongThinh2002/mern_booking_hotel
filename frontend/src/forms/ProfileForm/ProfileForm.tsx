@@ -41,7 +41,7 @@ const ProfileForm = ({user, refetch}: Props) => {
   return (
     <div className='grid grid-cols-1 gap-4'>
       <div className='flex flex-col gap-4'>
-        <h1 className='text-2xl select-none font-bold border-b border-slate-600 pb-3'>
+        <h1 className='text-2xl select-none font-bold border-b border-slate-800 pb-3'>
           My profile
         </h1>
         <div className='grid grid-cols-1 gap-5'>
@@ -60,7 +60,7 @@ const ProfileForm = ({user, refetch}: Props) => {
         </div>
       </div>
       <div className='flex flex-col gap-4'>
-        <h1 className='text-2xl select-none font-bold border-b border-slate-600 pt-2 pb-3'>
+        <h1 className='text-2xl select-none font-bold border-b border-slate-800 pt-2 pb-3'>
           Other
         </h1>
         <div className='grid lg:grid-cols-3 grid-cols-2 gap-5'>

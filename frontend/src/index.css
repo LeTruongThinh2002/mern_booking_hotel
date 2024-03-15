@@ -25,6 +25,17 @@
     @apply bg-slate-900 rounded-lg;
     @apply p-2 m-2;
   }
+
+  div.contain-performance-loading h3,
+  div.contain-performance-loading span {
+    @apply text-slate-200;
+    @apply font-bold;
+    @apply text-2xl;
+  }
+  div.contain-performance-loading {
+    @apply bg-transparent rounded-lg;
+    @apply p-2 m-2;
+  }
 }
 
 @tailwind components;
