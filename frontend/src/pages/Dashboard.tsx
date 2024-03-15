@@ -1,6 +1,5 @@
 import {useQuery} from 'react-query';
 import * as apiClient from '../api-client';
-import {VscLoading} from 'react-icons/vsc';
 import DashboardCard from '../components/DashboardCard';
 import {IoLogoUsd} from 'react-icons/io';
 import {GiCash} from 'react-icons/gi';
