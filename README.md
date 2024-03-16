@@ -7,7 +7,7 @@ Framework: Expressjs, React+Vite
   - Search, create new, lock, delete, edit, hotel booking
   - Statistics of revenue and expenditures
 
-Website Address: https://mern--tpooking-App-cxn3.onrender.com/
+Website Address: https://mern-booking-app-cxn3.onrender.com/
 
 VIET:
 Framework: ExpressJS, React+Vite
