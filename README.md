@@ -8,6 +8,7 @@ Function in the website:
   - Search, create new, lock, delete, edit, hotel booking
   - Statistics of revenue and expenditures
 Website Address: https://mern--tpooking-App-cxn3.onrender.com/
+
 VIET:
 Framework: ExpressJS, React+Vite
 Frontend: HTML, CSS, Tailwindcss, ReactJS, Typescript
