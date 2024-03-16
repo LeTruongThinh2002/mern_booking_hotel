@@ -175,7 +175,7 @@ export const vefiryEmail = async () => {
   const responseBody = await response.json();
 
   if (!response.ok) {
-    throw new Error(responseBody.message[0].msg);
+    throw new Error(responseBody.message[0].msg || responseBody.message);
   }
 };
 
